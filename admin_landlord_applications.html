@@ -1,0 +1,20 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตรวจเอกสารเจ้าของหอ | DormHub Admin</title><link rel="stylesheet" href="/static/css/admin.css"></head><body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="/admin">🏠 DormHub ADMIN</a><nav class="top-links"><a href="/admin">ภาพรวม</a><a href="/admin/users">ผู้ใช้</a><a href="/admin/landlord-applications" class="on">ตรวจเอกสารเจ้าของหอ</a><a href="/logout">ออกจากระบบ</a></nav></div></header>
+<main class="admin-wrap"><h1>📋 ตรวจคำขอเป็นเจ้าของหอพัก</h1><p class="lead">ระบบสาธิต: ใช้เอกสารจำลองเท่านั้น ไม่ได้พิสูจน์ความเป็นเจ้าของจริง</p>
+{{if eq .Result "approved"}}<div class="notice">✅ อนุมัติคำขอแล้ว — ผู้สมัคร Logout/Login ใหม่เพื่อรับสิทธิ์ Landlord</div>{{end}}
+{{if eq .Result "rejected"}}<div class="notice warn">บันทึกการปฏิเสธคำขอแล้ว</div>{{end}}
+{{if eq .Result "unchanged"}}<div class="notice warn">คำขอนี้ได้รับการพิจารณาแล้ว จึงไม่บันทึกซ้ำ</div>{{end}}
+<section class="panel"><h2>คำขอทั้งหมด (ล่าสุดไม่เกิน 200 รายการ)</h2>
+{{if .Applications}}<div class="table-scroll"><table><thead><tr><th>ผู้สมัคร</th><th>ชื่อหอ</th><th>สถานะ</th><th>เอกสาร</th><th>วันที่</th><th>พิจารณา</th></tr></thead><tbody>
+{{range .Applications}}<tr><td><b>#{{.ID}} {{.UserName}}</b><div class="muted">{{.Phone}}</div></td><td>{{.DormName}}</td><td><span class="pill {{.Status}}">{{.Status}}</span></td>
+<td><a href="/admin/landlord-document?id={{.ID}}">ดาวน์โหลดเอกสาร ({{.OriginalFilename}})</a><div class="muted">เฉพาะ Admin</div></td>
+<td>{{.CreatedAt}}</td><td>{{if eq .Status "pending"}}
+<form action="/admin/landlord-applications" method="post" onsubmit="return confirm('ยืนยันการพิจารณาคำขอนี้?');">
+<input type="hidden" name="csrf_token" value="{{$.CSRFToken}}"><input type="hidden" name="application_id" value="{{.ID}}">
+<input name="review_note" maxlength="255" placeholder="หมายเหตุ (ไม่บังคับ)" style="max-width:200px;padding:7px;border:1px solid #ddd;border-radius:8px">
+<div style="display:flex;gap:7px;margin-top:8px"><button class="btn" type="submit" name="decision" value="approved">✅ อนุมัติ</button>
+<button class="btn" style="background:#bb3e4f" type="submit" name="decision" value="rejected">❌ ปฏิเสธ</button></div></form>
+{{else}}<div class="muted">{{.ReviewedAt}}<div>{{.ReviewNote}}</div></div>{{end}}</td></tr>{{end}}
+</tbody></table></div>{{else}}<p class="empty">ยังไม่มีคำขอเจ้าของหอพัก</p>{{end}}</section>
+</main></body></html>

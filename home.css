@@ -1,0 +1,114 @@
+/* =========================================================
+   DORMHUB HOME - ADDITIONAL STYLES
+   This file is designed to be loaded AFTER the existing style.css.
+   It only styles the new home-* classes in templates/home.html.
+   Your original style.css does not need to be deleted or replaced.
+   ========================================================= */
+
+.home-hero {
+    position: relative;
+    padding: 75px 24px 65px;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 10% 10%, rgba(99,91,255,.12), transparent 35%),
+        radial-gradient(ellipse at 90% 80%, rgba(139,92,246,.10), transparent 35%),
+        #f8f9ff;
+}
+
+.home-hero-content { max-width: 1000px; margin: 0 auto; text-align: center; }
+.home-badge { display: inline-block; padding: 8px 16px; margin-bottom: 20px; border-radius: 30px; background: #eeedff; color: #5b55e8; font-size: 12px; font-weight: 500; letter-spacing: .5px; }
+.home-hero h1 { font-family: "Kanit", sans-serif; font-size: clamp(35px, 5vw, 55px); line-height: 1.35; font-weight: 600; color: #172033; margin-bottom: 15px; }
+.home-hero h1 span { color: #635bff; }
+.home-description { max-width: 650px; margin: 0 auto 32px; color: #727d90; font-size: 15px; line-height: 1.9; }
+
+/* Search form */
+.home-search-form { max-width: 850px; margin: 0 auto; padding: 12px; background: #fff; border: 1px solid #e9eafa; border-radius: 20px; box-shadow: 0 20px 55px rgba(49,46,129,.10); text-align: left; }
+.home-search-input { display: flex; align-items: center; gap: 12px; padding: 7px 14px 15px; border-bottom: 1px solid #edf0f6; }
+.home-search-input > span { font-size: 21px; }
+.home-search-input input { width: 100%; min-width: 0; padding: 8px 0; border: none; outline: none; background: transparent; font-family: inherit; font-size: 15px; color: #172033; }
+.home-search-input input::placeholder { color: #a0a7b6; }
+.home-search-filters { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; padding-top: 12px; }
+.home-filter { min-width: 0; display: flex; align-items: center; gap: 7px; padding: 0 9px; border: 1px solid #edf0f6; border-radius: 10px; background: #fff; }
+.home-filter select { width: 100%; min-width: 0; padding: 12px 0; border: none; outline: none; background: transparent; color: #555f72; font-family: inherit; font-size: 12px; cursor: pointer; }
+.home-search-button { padding: 0 23px; border: none; border-radius: 11px; background: linear-gradient(135deg,#5b55e8,#7c3aed); color: #fff; font-family: inherit; font-size: 13px; font-weight: 500; box-shadow: 0 7px 18px rgba(91,85,232,.22); transition: .25s; }
+.home-search-button:hover { transform: translateY(-2px); box-shadow: 0 11px 24px rgba(91,85,232,.3); }
+.home-highlights { display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; margin-top: 25px; color: #768195; font-size: 12px; }
+
+/* Recommended dorms */
+.home-recommend { padding: 65px 24px 85px; background: #fff; }
+.home-section-container { max-width: 1180px; margin: 0 auto; }
+.home-section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+.home-section-label { display: block; color: #655de8; font-size: 10px; font-weight: 600; letter-spacing: 1.8px; margin-bottom: 7px; }
+.home-section-heading h2, .home-how-heading h2 { font-family: "Kanit", sans-serif; font-size: 32px; line-height: 1.4; font-weight: 500; color: #172033; }
+.home-section-heading p { margin-top: 5px; color: #8a94a6; font-size: 13px; }
+.home-see-all { flex-shrink: 0; color: #5b55e8; font-size: 13px; font-weight: 500; padding-bottom: 5px; }
+.home-see-all:hover { color: #7c3aed; }
+.home-dorm-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+.home-dorm-card { min-width: 0; overflow: hidden; border: 1px solid #edf0f5; border-radius: 17px; background: #fff; transition: transform .25s,box-shadow .25s; }
+.home-dorm-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(31,41,55,.09); }
+.home-dorm-image { position: relative; display: flex; align-items: center; justify-content: center; height: 215px; overflow: hidden; text-decoration: none; }
+.dorm-image-a { background: linear-gradient(135deg,#dbeafe,#e0e7ff 55%,#ede9fe); }
+.dorm-image-b { background: linear-gradient(135deg,#d1fae5,#dbeafe 55%,#e0e7ff); }
+.dorm-image-c { background: linear-gradient(135deg,#fce7f3,#ede9fe 55%,#dbeafe); }
+.home-dorm-illustration { font-size: 95px; filter: drop-shadow(0 15px 12px rgba(43,52,90,.12)); transition: transform .3s; }
+.home-dorm-card:hover .home-dorm-illustration { transform: scale(1.08); }
+.home-dorm-tag { position: absolute; z-index: 2; top: 14px; left: 14px; padding: 6px 10px; border-radius: 30px; background: rgba(255,255,255,.93); color: #5b55e8; font-size: 10px; font-weight: 500; }
+.home-dorm-body { padding: 20px; }
+.home-dorm-rating { color: #d59b22; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+.home-dorm-rating span { color: #9aa2b1; font-size: 10px; font-weight: 400; }
+.home-dorm-body h3 { font-family: "Kanit", sans-serif; font-size: 20px; font-weight: 500; color: #172033; margin-bottom: 5px; }
+.home-dorm-location { color: #8993a4; font-size: 11px; line-height: 1.7; margin-bottom: 14px; }
+.home-dorm-amenities { display: flex; flex-wrap: wrap; gap: 7px; padding-bottom: 17px; }
+.home-dorm-amenities span { padding: 6px 9px; border-radius: 7px; background: #f5f6fa; color: #667085; font-size: 10px; }
+.home-dorm-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-top: 15px; border-top: 1px solid #edf0f5; }
+.home-dorm-bottom > div { display: flex; flex-direction: column; }
+.home-dorm-bottom > div > small { color: #98a2b3; font-size: 10px; }
+.home-dorm-bottom strong { color: #5b55e8; font-family: "Kanit", sans-serif; font-size: 23px; font-weight: 600; white-space: nowrap; }
+.home-dorm-bottom strong small { color: #98a2b3; font-family: "Prompt", sans-serif; font-size: 10px; font-weight: 400; }
+.home-view-button { flex-shrink: 0; padding: 9px 12px; border-radius: 9px; background: #f0efff; color: #5b55e8; font-size: 11px; font-weight: 500; transition: .2s; }
+.home-view-button:hover { background: #e4e1ff; }
+
+/* How to use */
+.home-how-to { padding: 75px 24px; background: #f7f8fc; }
+.home-how-heading { text-align: center; margin-bottom: 35px; }
+.home-steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.home-step { padding: 27px; border: 1px solid #edf0f5; border-radius: 16px; background: #fff; }
+.home-step > span { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; margin-bottom: 15px; border-radius: 12px; background: #eeedff; color: #5b55e8; font-family: "Kanit", sans-serif; font-weight: 600; }
+.home-step h3 { font-family: "Kanit", sans-serif; font-size: 19px; font-weight: 500; margin-bottom: 7px; }
+.home-step p { color: #8a94a6; font-size: 12px; line-height: 1.8; }
+
+/* Footer */
+.home-footer { padding: 40px 24px 20px; color: #fff; background: #151827; }
+.home-footer-inner { max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 15px; }
+.home-footer .logo-text span { color: #fff; }
+.home-footer .logo-text strong { color: #938cff; }
+.home-footer-inner > p { color: #a1a8b8; font-size: 12px; }
+.home-footer-contact { display: flex; flex-wrap: wrap; gap: 18px; }
+.home-footer-contact a { color: #c1c5d1; font-size: 12px; }
+.home-footer-contact a:hover { color: #fff; }
+.home-footer-inner > small { width: 100%; margin-top: 8px; padding-top: 17px; border-top: 1px solid rgba(255,255,255,.1); color: #737b8f; font-size: 10px; }
+
+/* Responsive rules for new Home */
+@media (max-width: 900px) {
+    .home-dorm-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .home-search-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .home-search-button { min-height: 44px; }
+}
+
+@media (max-width: 600px) {
+    .home-hero { padding: 48px 16px 45px; }
+    .home-hero h1 { font-size: 35px; }
+    .home-description { font-size: 13px; }
+    .home-search-form { padding: 10px; border-radius: 15px; }
+    .home-search-filters { grid-template-columns: 1fr; }
+    .home-filter select { padding: 12px 0; }
+    .home-search-button { padding: 13px; }
+    .home-highlights { gap: 10px 16px; font-size: 10px; }
+    .home-recommend, .home-how-to { padding: 48px 16px; }
+    .home-section-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+    .home-section-heading h2, .home-how-heading h2 { font-size: 27px; }
+    .home-dorm-grid, .home-steps { grid-template-columns: 1fr; }
+    .home-dorm-image { height: 220px; }
+    .home-dorm-illustration { font-size: 90px; }
+    .home-footer { padding: 35px 18px 20px; }
+}

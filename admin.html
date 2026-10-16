@@ -1,0 +1,22 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ภาพรวม | DormHub Admin</title><link rel="stylesheet" href="/static/css/admin.css"></head><body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="/admin">🏠 DormHub <span style="font-size:13px;color:#9196aa">ADMIN</span></a><nav class="top-links"><a href="/admin" class="on">ภาพรวม</a><a href="/admin/users" >ผู้ใช้</a><a href="/admin/dorms" >หอพัก</a><a href="/admin/landlord-applications">ตรวจเอกสารเจ้าของหอ</a><a href="/admin/requests" >คำขอเช่า</a><a href="/">หน้าเว็บ</a><a href="/logout">ออกจากระบบ</a></nav></div></header>
+<main class="admin-wrap">
+<p class="eyebrow">DORMHUB · ADMIN CONTROL CENTER</p><h1>ภาพรวมระบบ DormHub</h1><p class="lead">ยินดีต้อนรับ {{.Name}} · สถิติอัปเดตจากฐานข้อมูล DormHub</p>
+<section class="stats">
+<div class="stat"><span class="lab">👤 บัญชีผู้ใช้</span><strong>{{.Users}}</strong></div>
+<div class="stat"><span class="lab">🔑 เจ้าของหอพัก</span><strong>{{.Landlords}}</strong></div>
+<div class="stat"><span class="lab">🏢 หอพักในระบบ</span><strong>{{.Dorms}}</strong></div>
+<div class="stat"><span class="lab">🛏️ ห้องพักทั้งหมด</span><strong>{{.Rooms}}</strong></div>
+<div class="stat"><span class="lab">✅ ห้องว่าง</span><strong>{{.AvailableRooms}}</strong></div>
+<div class="stat"><span class="lab">⏳ คำขอรออนุมัติ</span><strong>{{.PendingRequests}}</strong></div>
+<div class="stat"><span class="lab">⭐ รีวิว</span><strong>{{.Reviews}}</strong></div>
+</section>
+<div class="grid-2">
+<section class="panel"><div class="panel-head"><h2>🏢 หอพักล่าสุด</h2><a class="btn btn-secondary" href="/admin/dorms">ดูทั้งหมด →</a></div>
+{{if .RecentDorms}}<div class="table-scroll"><table><thead><tr><th>หอพัก</th><th>เจ้าของ</th><th>ห้องว่าง</th></tr></thead><tbody>{{range .RecentDorms}}<tr><td><a href="/dorm?id={{.ID}}">{{.Name}}</a></td><td>{{.OwnerName}}</td><td>{{.AvailableRooms}} / {{.TotalRooms}}</td></tr>{{end}}</tbody></table></div>{{else}}<p class="empty">ยังไม่มีหอพัก</p>{{end}}
+</section>
+<section class="panel"><div class="panel-head"><h2>📋 คำขอเช่าล่าสุด</h2><a class="btn btn-secondary" href="/admin/requests">ดูทั้งหมด →</a></div>
+{{if .RecentRequests}}<div class="table-scroll"><table><thead><tr><th>ผู้เช่า</th><th>ห้อง</th><th>สถานะ</th></tr></thead><tbody>{{range .RecentRequests}}<tr><td>{{.TenantName}}</td><td>{{.DormName}} · {{.RoomNumber}}</td><td><span class="pill {{.Status}}">{{if eq .Status "approved"}}อนุมัติแล้ว{{else if eq .Status "rejected"}}ปฏิเสธแล้ว{{else}}รอพิจารณา{{end}}</span></td></tr>{{end}}</tbody></table></div>{{else}}<p class="empty">ยังไม่มีคำขอเช่า</p>{{end}}
+</section>
+</div><p class="muted">ผู้ดูแลดูภาพรวมทุกหอพักได้ แต่การอนุมัติ/ปฏิเสธยังเป็นสิทธิ์เจ้าของหอพัก เพื่อไม่เปลี่ยนขั้นตอนเดิม</p>
+</main></body></html>

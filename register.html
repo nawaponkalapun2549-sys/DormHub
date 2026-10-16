@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>สมัครสมาชิก | DormHub</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, "Noto Sans Thai", sans-serif;
+            min-height: 100vh;
+
+            background: linear-gradient(
+                135deg,
+                #eef4ff,
+                #f8fbff
+            );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .register-card {
+            background: #ffffff;
+
+            padding: 40px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.10);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            font-size: 30px;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            color: #374151;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 18px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+
+            padding: 14px 14px 14px 45px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    37,
+                    99,
+                    235,
+                    0.12
+                );
+        }
+
+        .btn-register {
+            width: 100%;
+
+            border: none;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            margin-top: 5px;
+        }
+
+        .btn-register:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            border: 1px solid #fecaca;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+        .login-link {
+            text-align: center;
+
+            margin-top: 25px;
+
+            font-size: 14px;
+
+            color: #6b7280;
+        }
+
+        .login-link a {
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-home:hover {
+            color: #2563eb;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        .password-hint {
+            margin-top: 6px;
+
+            font-size: 12px;
+
+            color: #9ca3af;
+        }
+    
+        .role-choices{display:grid;gap:10px;margin-top:12px}
+        .role-choice{display:block;padding:13px 15px;border:1px solid #dfe4f0;border-radius:11px;cursor:pointer;font-size:14px;color:#26324c}
+        .role-choice input{accent-color:#635bff;margin-right:7px}
+        .landlord-fields{padding:18px 16px 8px;border-radius:14px;background:#f7f6ff;border:1px solid #dedbff;margin-bottom:20px}
+        .landlord-fields h3{font-size:17px;margin:0 0 8px;color:#4438a9}
+        .landlord-fields p{font-size:12px;color:#6b7280;margin-bottom:18px;line-height:1.7}
+        .demo-control{display:block;width:100%;padding:13px;border:1px solid #ccd2df;border-radius:10px;font-family:inherit;font-size:13px;background:white}
+        .demo-notice{font-size:12px;padding:12px;background:#e9f6ef;color:#186b44;border-radius:10px;margin-bottom:14px}
+
+    </style>
+</head>
+
+<body>
+
+<div class="register-container">
+
+    <div class="register-card">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icon">
+                🏠
+            </div>
+
+            <h1>DormHub</h1>
+
+            <p>
+                สร้างบัญชีเพื่อเริ่มค้นหาหอพัก
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+        {{if .Error}}
+
+        <div class="error-message">
+            ⚠️ {{.Error}}
+        </div>
+
+        {{end}}
+
+
+        <!-- REGISTER FORM -->
+        <form
+            action="/register"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            <!-- NAME -->
+            <div class="form-group">
+
+                <label for="name">
+                    ชื่อ-นามสกุล
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="กรอกชื่อ-นามสกุล"
+                        maxlength="100"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PHONE -->
+            <div class="form-group">
+
+                <label for="phone">
+                    เบอร์โทรศัพท์
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        📱
+                    </span>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="0917834013"
+                        maxlength="10"
+                        pattern="[0-9]{10}"
+                        inputmode="numeric"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+
+                <label for="password">
+                    รหัสผ่าน
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="กรอกรหัสผ่าน"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+                <div class="password-hint">
+                    รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+            <div class="form-group">
+
+                <label for="confirm_password">
+                    ยืนยันรหัสผ่าน
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔐
+                    </span>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        placeholder="กรอกรหัสผ่านอีกครั้ง"
+                        minlength="6"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 15: Choose the account type; never expose admin as a signup option. -->
+            <div class="form-group">
+                <label>ประเภทบัญชี <span class="required">*</span></label>
+                <div class="role-choices">
+                    <label class="role-choice"><input type="radio" name="account_type" value="user" checked onchange="toggleLandlordFields()"> ผู้เช่าหอพัก (User)</label>
+                    <label class="role-choice"><input type="radio" name="account_type" value="landlord" onchange="toggleLandlordFields()"> เจ้าของหอพัก (Landlord)</label>
+                </div>
+            </div>
+            <div id="landlord-fields" class="landlord-fields" hidden>
+                <h3>📄 สมัครเจ้าของหอพัก (สำหรับทดสอบ)</h3>
+                <p>แนบไฟล์สมมติเท่านั้น ห้ามใช้บัตรประชาชน ทะเบียนบ้าน โฉนด หรือข้อมูลจริง</p>
+                <div class="form-group"><label for="dorm_name">ชื่อหอพักตัวอย่าง <span class="required">*</span></label>
+                    <input class="demo-control" id="dorm_name" name="dorm_name" maxlength="150" placeholder="เช่น หอพักตัวอย่าง A"></div>
+                <div class="form-group"><label for="proof_document">เอกสารสมมติประกอบคำขอ <span class="required">*</span></label>
+                    <input class="demo-control" id="proof_document" name="proof_document" type="file" accept=".txt,.pdf,.png,.jpg,.jpeg">
+                    <div class="password-hint">รองรับ TXT/PDF/PNG/JPG ไม่เกิน 3 MB สามารถใช้ไฟล์ตัวอย่างที่ให้มาได้</div></div>
+                <div class="demo-notice">หลังสมัคร ระบบจะบันทึกสิทธิ์เป็น User ชั่วคราว แล้วรอ Admin อนุมัติจึงเปลี่ยนเป็น Landlord</div>
+            </div>
+
+            <!-- BUTTON -->
+            <button
+                type="submit"
+                class="btn-register"
+            >
+                สมัครสมาชิก
+            </button>
+
+        </form>
+
+
+        <!-- LOGIN -->
+        <div class="login-link">
+
+            มีบัญชีอยู่แล้ว?
+
+            <a href="/login">
+                เข้าสู่ระบบ
+            </a>
+
+        </div>
+
+
+        <!-- HOME -->
+        <a
+            href="/"
+            class="back-home"
+        >
+            ← กลับหน้าแรก
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+function toggleLandlordFields(){
+  const isLandlord=document.querySelector('input[name="account_type"]:checked')?.value==='landlord';
+  const box=document.getElementById('landlord-fields');
+  box.hidden=!isLandlord;
+  document.getElementById('dorm_name').required=isLandlord;
+  document.getElementById('proof_document').required=isLandlord;
+}
+toggleLandlordFields();
+</script>
+</body>
+</html>

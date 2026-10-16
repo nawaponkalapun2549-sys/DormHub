@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>จัดการคำขอเช่า | DormHub</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {background:#f7f8fc;color:#223047;font-family:'Prompt',sans-serif;min-height:100vh;}
+    .page {max-width:1120px;margin:auto;padding:36px 22px 88px;}
+    .back {color:#6757e8;font-size:13px;display:inline-block;margin-bottom:25px;}
+    .heading {display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:25px;}
+    h1 {font-family:'Kanit',sans-serif;font-size:34px;font-weight:600;line-height:1.3;}
+    .muted {font-size:13px;color:#818ba0;margin-top:8px;}
+    .count {background:#f0efff;color:#635bff;border:1px solid #dedbff;padding:11px 17px;border-radius:13px;font-size:13px;font-weight:600;}
+    .notice {padding:15px 18px;border-radius:12px;margin-bottom:20px;font-size:13px;background:#edf9f1;color:#157347;}
+    .notice.warn {background:#fff4e9;color:#a34d13;}
+    .list {display:grid;gap:17px;}
+    .req {background:#fff;border:1px solid #eaedf5;border-radius:18px;padding:25px;box-shadow:0 9px 22px rgba(30,40,80,.03);}
+    .req-top {display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap;margin-bottom:17px;}
+    .req-title {font-family:'Kanit',sans-serif;font-size:21px;font-weight:600;color:#27324e;}
+    .req-meta {color:#8490a5;font-size:12px;margin-top:3px;}
+    .pill {padding:7px 13px;border-radius:30px;font-size:12px;font-weight:600;white-space:nowrap;}
+    .pending {background:#fff5dc;color:#986700;}
+    .approved {background:#e7f8ec;color:#167c47;}
+    .rejected {background:#fceeee;color:#b63f3f;}
+    .details {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0;}
+    .detail {padding:12px 14px;background:#f8f9fd;border:1px solid #eef0f7;border-radius:11px;font-size:13px;min-width:0;overflow-wrap:anywhere;}
+    .detail span {display:block;color:#8790a4;font-size:11px;margin-bottom:5px;}
+    .message {padding:14px 16px;background:#f9f8ff;border-radius:12px;font-size:13px;color:#667085;white-space:pre-wrap;overflow-wrap:anywhere;}
+    .actions {display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+    .actions form {margin:0;}
+    .btn {border:0;border-radius:10px;padding:12px 20px;color:white;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;}
+    .btn-approve {background:#5b55e8;}
+    .btn-reject {background:#e35361;}
+    .btn:hover {filter:brightness(.93);}
+    .empty {background:white;text-align:center;padding:72px 20px;border:1px dashed #cfd4e7;border-radius:18px;color:#8790a4;}
+    .empty h2 {font-family:'Kanit',sans-serif;color:#27324e;font-size:23px;margin:13px 0 4px;}
+    @media (max-width:640px) {.page{padding:24px 15px 65px;}h1{font-size:27px;}.req{padding:18px;}.details{grid-template-columns:1fr;}.btn{width:100%;}.actions form{flex:1 1 100%;}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <a class="back" href="/landlord">← กลับไปหน้า Landlord Dashboard</a>
+  <div class="heading">
+    <div>
+      <h1>📋 จัดการคำขอเช่าห้องพัก</h1>
+      <p class="muted">สวัสดี {{.Name}} · ตรวจสอบคำขอจากผู้เช่าของหอพักคุณ</p>
+    </div>
+    <div class="count">⏳ รอการพิจารณา {{.Pending}} รายการ</div>
+  </div>
+
+  {{if eq .Result "approved"}}<div class="notice">✅ อนุมัติคำขอแล้ว ห้องพักเปลี่ยนเป็นไม่ว่างเรียบร้อย</div>{{end}}
+  {{if eq .Result "rejected"}}<div class="notice">✅ ปฏิเสธคำขอแล้ว ห้องพักยังคงสถานะเดิม</div>{{end}}
+  {{if eq .Result "changed"}}<div class="notice warn">⚠️ คำขอนี้ถูกจัดการไปแล้ว กรุณาตรวจสอบสถานะล่าสุด</div>{{end}}
+  {{if eq .Result "not_available"}}<div class="notice warn">⚠️ ห้องนี้ไม่ได้อยู่ในสถานะว่าง จึงไม่สามารถอนุมัติได้</div>{{end}}
+
+  {{if .Requests}}
+    <section class="list">
+      {{range .Requests}}
+      <article class="req">
+        <div class="req-top">
+          <div>
+            <div class="req-title">🏢 {{.DormName}} · ห้อง {{.RoomNumber}}</div>
+            <p class="req-meta">คำขอ #{{.ID}} · ส่งเมื่อ {{.CreatedAt}}</p>
+          </div>
+          {{if eq .Status "pending"}}<span class="pill pending">⏳ รออนุมัติ</span>
+          {{else if eq .Status "approved"}}<span class="pill approved">✓ อนุมัติแล้ว</span>
+          {{else}}<span class="pill rejected">✕ ปฏิเสธแล้ว</span>{{end}}
+        </div>
+        <div class="details">
+          <div class="detail"><span>ผู้ขอเช่า</span>👤 {{.TenantName}}</div>
+          <div class="detail"><span>เบอร์โทรติดต่อ</span>📞 {{.Phone}}</div>
+          <div class="detail"><span>กำหนดย้ายเข้า</span>📅 {{.MoveInDate}}</div>
+          <div class="detail"><span>สถานะคำขอ</span>{{.Status}}</div>
+        </div>
+        {{if .Message}}<div class="message">💬 {{.Message}}</div>{{end}}
+        {{if eq .Status "pending"}}
+        <div class="actions">
+          <form action="/landlord/requests" method="POST" onsubmit="return confirm('ยืนยันการอนุมัติคำขอเช่านี้? ห้องจะเปลี่ยนเป็นไม่ว่าง');">
+            <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+            <input type="hidden" name="request_id" value="{{.ID}}">
+            <input type="hidden" name="action" value="approve">
+            <button class="btn btn-approve" type="submit">✓ อนุมัติคำขอ</button>
+          </form>
+          <form action="/landlord/requests" method="POST" onsubmit="return confirm('ยืนยันการปฏิเสธคำขอนี้?');">
+            <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+            <input type="hidden" name="request_id" value="{{.ID}}">
+            <input type="hidden" name="action" value="reject">
+            <button class="btn btn-reject" type="submit">✕ ปฏิเสธคำขอ</button>
+          </form>
+        </div>
+        {{end}}
+      </article>
+      {{end}}
+    </section>
+  {{else}}
+    <div class="empty">
+      <div style="font-size:54px">📭</div>
+      <h2>ยังไม่มีคำขอเช่า</h2>
+      <p>เมื่อมีผู้เช่าส่งคำขอ ห้องพักของคุณจะแสดงรายการที่นี่</p>
+    </div>
+  {{end}}
+</main>
+</body>
+</html>

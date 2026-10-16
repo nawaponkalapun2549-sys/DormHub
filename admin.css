@@ -1,0 +1,31 @@
+/* DormHub Admin Step 13 | separate stylesheet to protect existing pages */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Prompt:wght@400;500;600&display=swap');
+*{box-sizing:border-box} body{background:#f6f7fd;color:#25304b;font-family:'Prompt',sans-serif;margin:0;line-height:1.65}
+a{color:#6256ef;text-decoration:none} a:hover{text-decoration:underline}
+.admin-wrap{max-width:1220px;margin:0 auto;padding:26px 20px 75px}
+.topbar{background:white;border-bottom:1px solid #e7e9f3;position:sticky;top:0;z-index:9}
+.topbar-inner{max-width:1220px;margin:0 auto;padding:13px 20px;display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{font:600 25px Kanit,sans-serif;color:#6256ef}.brand:hover{text-decoration:none}
+.top-links{display:flex;gap:15px;align-items:center;flex-wrap:wrap;font-size:13px}
+.top-links a{color:#59647b}.top-links a.on{color:#6256ef;font-weight:600}
+.eyebrow{font-size:12px;color:#7368c8;font-weight:600;margin:0 0 7px}
+h1,h2,h3{font-family:Kanit,sans-serif;line-height:1.35;margin:0;font-weight:600}
+h1{font-size:34px}h2{font-size:23px}h3{font-size:18px}
+.lead{font-size:13px;color:#8a94a6;margin:6px 0 26px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:24px 0}
+.stat,.panel{background:white;border:1px solid #e9ebf4;border-radius:18px;box-shadow:0 9px 30px rgba(41,38,92,.035)}
+.stat{padding:21px}.stat .lab{font-size:12px;color:#828da1}.stat strong{display:block;font:600 30px Kanit,sans-serif;margin-top:5px;color:#4f46e5}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{padding:22px;margin:15px 0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.table-scroll{overflow:auto;width:100%}table{border-collapse:collapse;width:100%;min-width:570px} th{color:#69748b;text-align:left;background:#f8f9fd;font-size:12px;font-weight:600}td{font-size:13px}th,td{border-bottom:1px solid #edf0f7;padding:13px 12px;vertical-align:middle}tr:last-child td{border-bottom:0}
+.pill{display:inline-block;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:600;white-space:nowrap}
+.pill.pending{background:#fff4d9;color:#9c6a00}.pill.approved,.pill.available{background:#e7f8ed;color:#16834b}.pill.rejected{background:#ffebed;color:#b63f4b}
+.pill.admin{background:#f0edff;color:#6452da}.pill.landlord{background:#e6f0ff;color:#245ab4}.pill.user{background:#eef2f6;color:#5d6b7c}
+.btn{display:inline-block;padding:9px 14px;border:none;border-radius:10px;background:#6256ef;color:#fff;font:500 12px Prompt,sans-serif;cursor:pointer}
+.btn:hover{background:#4f45d0;color:white;text-decoration:none}.btn-secondary{background:#f2f0ff;color:#6256ef}.btn-secondary:hover{background:#e8e4ff;color:#6256ef}
+.notice{border-radius:12px;padding:13px 15px;margin:18px 0;background:#e9f8ef;color:#137345;font-size:13px}
+.notice.warn{background:#fff4e5;color:#9e6218}
+.muted{font-size:12px;color:#8590a1}.empty{padding:24px;color:#8792a3;text-align:center}
+.inline-form{display:flex;gap:6px;align-items:center;flex-wrap:wrap}select{border:1px solid #dfe2f0;border-radius:8px;padding:7px 10px;font:12px Prompt,sans-serif;max-width:130px}
+@media(max-width:920px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-2{grid-template-columns:1fr}}
+@media(max-width:580px){.admin-wrap{padding:20px 13px 60px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.stat{padding:15px}.stat strong{font-size:24px}.panel{padding:15px}h1{font-size:28px}.topbar-inner{padding:11px 13px}}

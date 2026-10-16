@@ -1,0 +1,7 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>หอพักทั้งหมด | DormHub Admin</title><link rel="stylesheet" href="/static/css/admin.css"></head><body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="/admin">🏠 DormHub <span style="font-size:13px;color:#9196aa">ADMIN</span></a><nav class="top-links"><a href="/admin" >ภาพรวม</a><a href="/admin/users" >ผู้ใช้</a><a href="/admin/dorms" class="on">หอพัก</a><a href="/admin/landlord-applications">ตรวจเอกสารเจ้าของหอ</a><a href="/admin/requests" >คำขอเช่า</a><a href="/">หน้าเว็บ</a><a href="/logout">ออกจากระบบ</a></nav></div></header>
+<main class="admin-wrap">
+<p class="eyebrow">DORMHUB · ADMIN</p><h1>ตรวจสอบหอพักทั้งหมด</h1><p class="lead">แสดงหอพักล่าสุดไม่เกิน 200 แห่งพร้อมชื่อเจ้าของ จำนวนห้องและห้องว่าง · หน้านี้ดูข้อมูลอย่างเดียว</p>
+<section class="panel"><div class="panel-head"><h2>🏢 รายการหอพัก</h2></div>{{if .Dorms}}<div class="table-scroll"><table><thead><tr><th>ID</th><th>ชื่อหอพัก</th><th>ที่อยู่</th><th>เจ้าของหอ</th><th>ห้องทั้งหมด</th><th>ห้องว่าง</th><th>รายละเอียด</th></tr></thead><tbody>
+{{range .Dorms}}<tr><td>#{{.ID}}</td><td><b>{{.Name}}</b></td><td>{{.Address}}</td><td>{{.OwnerName}}</td><td>{{.TotalRooms}}</td><td>{{.AvailableRooms}}</td><td><a href="/dorm?id={{.ID}}">เปิดหน้าเว็บ →</a></td></tr>{{end}}</tbody></table></div>{{else}}<p class="empty">ยังไม่มีหอพัก</p>{{end}}</section>
+</main></body></html>

@@ -1,0 +1,10 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>สถานะสมัครเจ้าของหอ | DormHub</title><link rel="stylesheet" href="/static/css/style.css">
+<style>body{background:#f6f7fd;font-family:Prompt,Arial,sans-serif}.status-box{max-width:670px;margin:10vh auto;padding:35px;border-radius:20px;background:#fff;box-shadow:0 8px 24px #1111}.status-box h1{color:#453bb7}.notice{padding:18px;background:#f5f4ff;border-radius:12px;margin:20px 0;line-height:1.7}.action-link{display:inline-block;padding:11px 16px;background:#635bff;color:#fff;text-decoration:none;border-radius:10px;margin:6px 8px 0 0}</style></head><body>
+<main class="status-box"><h1>🏠 สถานะสมัครเจ้าของหอพัก</h1><p>สวัสดี {{.Name}} — หอพัก: <b>{{.DormName}}</b></p>
+{{if eq .Status "pending"}}<div class="notice">⏳ <b>รอ Admin ตรวจเอกสารตัวอย่าง</b><p>ระหว่างนี้บัญชียังเป็น User และยังเพิ่มหอพักไม่ได้</p></div>{{end}}
+{{if eq .Status "approved"}}<div class="notice">✅ <b>อนุมัติแล้ว!</b><p>กรุณาออกจากระบบแล้ว Login ใหม่เพื่ออัปเดตเมนู Landlord</p></div>{{end}}
+{{if eq .Status "rejected"}}<div class="notice">❌ <b>ไม่อนุมัติคำขอ</b><p>บัญชียังใช้เป็น User ได้ หากต้องการทดสอบใหม่ให้แจ้ง Admin</p></div>{{end}}
+{{if .ReviewNote}}<p><b>หมายเหตุผู้ตรวจ:</b> {{.ReviewNote}}</p>{{end}}
+<a class="action-link" href="/">หน้าแรก</a><a class="action-link" href="/logout">ออกจากระบบ</a>
+</main></body></html>

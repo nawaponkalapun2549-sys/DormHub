@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>จัดการผู้ใช้ | DormHub Admin</title><link rel="stylesheet" href="/static/css/admin.css"></head><body>
+<header class="topbar"><div class="topbar-inner"><a class="brand" href="/admin">🏠 DormHub <span style="font-size:13px;color:#9196aa">ADMIN</span></a><nav class="top-links"><a href="/admin" >ภาพรวม</a><a href="/admin/users" class="on">ผู้ใช้</a><a href="/admin/dorms" >หอพัก</a><a href="/admin/landlord-applications">ตรวจเอกสารเจ้าของหอ</a><a href="/admin/requests" >คำขอเช่า</a><a href="/">หน้าเว็บ</a><a href="/logout">ออกจากระบบ</a></nav></div></header>
+<main class="admin-wrap">
+<p class="eyebrow">DORMHUB · ADMIN</p><h1>จัดการผู้ใช้งาน</h1><p class="lead">ดูบัญชีล่าสุด 200 รายการ · เปลี่ยนสิทธิ์ระหว่าง user กับ landlord โดยไม่ลบข้อมูลผู้ใช้</p>
+{{if eq .Result "updated"}}<div class="notice">✅ เปลี่ยนสิทธิ์สำเร็จ ผู้ใช้ต้องออกจากระบบแล้วเข้าใหม่เพื่อให้เมนูตรงกับสิทธิ์ใหม่</div>{{end}}
+{{if eq .Result "unchanged"}}<div class="notice warn">⚠️ ไม่ได้เปลี่ยนสิทธิ์ อาจเป็นค่าเดิม บัญชี admin หรือเจ้าของหอที่ยังมีหอพักอยู่</div>{{end}}
+<section class="panel"><div class="panel-head"><h2>👥 บัญชีผู้ใช้</h2><span class="muted">แก้สิทธิ์เฉพาะ user / landlord</span></div>
+{{if .Users}}<div class="table-scroll"><table><thead><tr><th>ID</th><th>ชื่อ</th><th>โทรศัพท์</th><th>สิทธิ์ปัจจุบัน</th><th>หอพัก</th><th>เข้าร่วม</th><th>จัดการสิทธิ์</th></tr></thead><tbody>
+{{range .Users}}<tr><td>#{{.ID}}</td><td>{{.Name}}</td><td>{{.Phone}}</td><td><span class="pill {{.Role}}">{{.Role}}</span></td><td>{{.DormCount}}</td><td>{{.CreatedAt}}</td><td>
+{{if eq .Role "admin"}}<span class="muted">บัญชี admin (ล็อกไว้)</span>{{else}}
+<form class="inline-form" method="POST" action="/admin/users" onsubmit="return confirm('ยืนยันการเปลี่ยนสิทธิ์บัญชีนี้?');">
+<input type="hidden" name="csrf_token" value="{{$.CSRFToken}}"><input type="hidden" name="user_id" value="{{.ID}}"><select name="role" aria-label="เลือกสิทธิ์สำหรับ {{.Name}}"><option value="user" {{if eq .Role "user"}}selected{{end}}>user</option><option value="landlord" {{if eq .Role "landlord"}}selected{{end}}>landlord</option></select><button type="submit" class="btn">บันทึก</button></form>
+{{end}}
+</td></tr>{{end}}</tbody></table></div>{{else}}<p class="empty">ไม่มีผู้ใช้</p>{{end}}</section>
+<p class="muted">ระบบป้องกันการลดสิทธิ์เจ้าของหอที่ยังมีหอพัก เพื่อไม่ทำให้เจ้าของเข้าไปจัดการหอพักไม่ได้ · ไม่อนุญาตให้เปลี่ยนบัญชี admin จากหน้านี้</p>
+</main></body></html>

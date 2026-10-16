@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{.Dorm.Name}} | DormHub</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        .dd-page {
+
+            min-height: 100vh;
+
+            background: #f7f8fc;
+
+            color: #253047;
+
+            font-family: 'Prompt', sans-serif;
+
+        }
+
+        .dd-nav {
+
+            background: white;
+
+            border-bottom: 1px solid #e9eaf2;
+
+        }
+
+        .dd-nav-inner {
+
+            max-width: 1160px;
+
+            margin: auto;
+
+            padding: 16px 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 16px;
+
+        }
+
+        .dd-logo {
+
+            color: #6757e8;
+
+            font-family: 'Kanit', sans-serif;
+
+            font-size: 26px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+        }
+
+        .dd-nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .dd-nav-links a {
+
+            color: #667085;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+        }
+
+        .dd-nav-links a:hover {
+
+            color: #635bff;
+
+        }
+
+        .dd-nav-links .dd-nav-pill {
+
+            padding: 10px 16px;
+
+            background: #635bff;
+
+            color: white;
+
+            border-radius: 10px;
+
+        }
+
+        .dd-main {
+
+            max-width: 1160px;
+
+            margin: 0 auto;
+
+            padding: 27px 24px 75px;
+
+        }
+
+        .dd-back {
+
+            color: #635bff;
+
+            font-size: 13px;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+        }
+
+        .dd-top {
+
+            display: flex;
+
+            align-items: start;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 22px;
+
+        }
+
+        .dd-top h1 {
+
+            font-family: 'Kanit', sans-serif;
+
+            font-size: 34px;
+
+            font-weight: 600;
+
+            line-height: 1.4;
+
+            color: #1b2540;
+
+            margin: 0 0 7px;
+
+        }
+
+        .dd-address {
+
+            color: #768297;
+
+            font-size: 14px;
+
+            margin: 0;
+
+        }
+
+        .dd-availability {
+
+            display: inline-block;
+
+            padding: 9px 14px;
+
+            color: #087443;
+
+            background: #eafbf2;
+
+            border-radius: 25px;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+
+        }
+
+        .dd-availability.dd-empty {
+
+            background: #fff3ed;
+
+            color: #b6542d;
+
+        }
+
+        .dd-hero {
+
+            display: grid;
+
+            grid-template-columns: minmax(0, 1.7fr) minmax(260px, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .dd-photo {
+
+            background: linear-gradient(135deg, #e1dffd, #bfb9fa);
+
+            border-radius: 19px;
+
+            height: 320px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        .dd-photo img {
+
+            display: block;
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+        .dd-photo-placeholder {
+
+            font-size: 85px;
+
+            opacity: .75;
+
+        }
+
+        .dd-summary {
+
+            border-radius: 19px;
+
+            background: #fff;
+
+            border: 1px solid #ececf4;
+
+            padding: 28px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+        }
+
+        .dd-summary-label {
+
+            color: #8790a5;
+
+            font-size: 12px;
+
+        }
+
+        .dd-summary-price {
+
+            color: #635bff;
+
+            font-family: 'Kanit', sans-serif;
+
+            font-weight: 600;
+
+            font-size: 35px;
+
+            margin: 4px 0 1px;
+
+        }
+
+        .dd-summary-unit {
+
+            color: #8992a3;
+
+            font-size: 13px;
+
+        }
+
+        .dd-summary-line {
+
+            border-top: 1px solid #ececf4;
+
+            margin: 24px 0;
+
+        }
+
+        .dd-summary-count {
+
+            font-family: 'Kanit', sans-serif;
+
+            font-size: 22px;
+
+            font-weight: 500;
+
+            margin: 4px 0;
+
+        }
+
+        .dd-content {
+
+            display: grid;
+
+            grid-template-columns: minmax(0, 1fr) 290px;
+
+            gap: 23px;
+
+            align-items: start;
+
+        }
+
+        .dd-panel {
+
+            background: white;
+
+            border: 1px solid #ececf4;
+
+            padding: 26px;
+
+            border-radius: 17px;
+
+            margin-bottom: 21px;
+
+        }
+
+        .dd-panel h2 {
+
+            font-family: 'Kanit', sans-serif;
+
+            font-weight: 600;
+
+            font-size: 23px;
+
+            color: #1e2840;
+
+            margin: 0 0 16px;
+
+        }
+
+        .dd-description {
+
+            color: #657189;
+
+            font-size: 14px;
+
+            line-height: 1.9;
+
+            white-space: pre-wrap;
+
+            overflow-wrap: anywhere;
+
+        }
+
+        .dd-muted {
+
+            color: #9aa3b3;
+
+            font-size: 13px;
+
+        }
+
+        .dd-room {
+
+            padding: 20px 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            border-top: 1px solid #eff0f5;
+
+        }
+
+        .dd-room:first-of-type {
+
+            border-top: 0;
+
+        }
+
+        .dd-room h3 {
+
+            font-family: 'Kanit', sans-serif;
+
+            font-size: 20px;
+
+            font-weight: 500;
+
+            margin: 0 0 6px;
+
+        }
+
+        .dd-room-info {
+
+            font-size: 13px;
+
+            color: #738095;
+
+            margin: 3px 0;
+
+        }
+
+        .dd-room-desc {
+
+            font-size: 12px;
+
+            color: #929aab;
+
+            margin: 7px 0 0;
+
+            line-height: 1.6;
+
+            overflow-wrap: anywhere;
+
+        }
+
+        .dd-room-right {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: flex-end;
+
+            gap: 8px;
+
+            min-width: 160px;
+
+        }
+
+        .dd-room-price {
+
+            font-family: 'Kanit', sans-serif;
+
+            font-size: 23px;
+
+            color: #635bff;
+
+            font-weight: 600;
+
+            white-space: nowrap;
+
+        }
+
+        .dd-request {
+
+            display: inline-block;
+
+            padding: 10px 16px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            background: #635bff;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-family: inherit;
+
+        }
+
+        .dd-request[disabled] {
+
+            background: #ddd9f9;
+
+            color: #695fa6;
+
+            cursor: not-allowed;
+
+        }
+
+        .dd-request-note {
+
+            color: #919bad;
+
+            font-size: 11px;
+
+            text-align: right;
+
+        }
+
+        .dd-help {
+
+            background: linear-gradient(155deg, #6655ed, #8e67f0);
+
+            border: 0;
+
+            color: #fff;
+
+        }
+
+        .dd-help h2 {
+
+            color: #fff;
+
+        }
+
+        .dd-help p {
+
+            color: #f1eeff;
+
+            line-height: 1.9;
+
+            font-size: 13px;
+
+        }
+
+        .dd-help a {
+
+            color: white;
+
+            text-decoration: underline;
+
+        }
+
+        .dd-no-rooms {
+
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: #8992a5;
+
+        }
+
+        .dd-no-rooms strong {
+
+            display: block;
+
+            font-family: 'Kanit', sans-serif;
+
+            color: #4c5264;
+
+            font-size: 20px;
+
+            margin: 7px 0;
+
+        }
+
+        @media (max-width: 900px) {
+
+            .dd-hero,
+
+            .dd-content {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .dd-photo {
+
+                height: 280px;
+
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .dd-main {
+
+                padding: 20px 15px 55px;
+
+            }
+
+            .dd-nav-inner {
+
+                padding: 14px 15px;
+
+            }
+
+            .dd-nav-links {
+
+                gap: 10px;
+
+            }
+
+            .dd-nav-links a {
+
+                font-size: 12px;
+
+            }
+
+            .dd-top {
+
+                flex-direction: column;
+
+                gap: 10px;
+
+            }
+
+            .dd-top h1 {
+
+                font-size: 27px;
+
+            }
+
+            .dd-photo {
+
+                height: 220px;
+
+            }
+
+            .dd-panel {
+
+                padding: 20px;
+
+            }
+
+            .dd-summary {
+
+                padding: 23px;
+
+            }
+
+            .dd-room {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+            .dd-room-right {
+
+                align-items: flex-start;
+
+            }
+
+            .dd-request-note {
+
+                text-align: left;
+
+            }
+
+        }
+
+
+
+        /* STEP 12: Reviews & Favorites */
+        .dd-fav-form { margin:16px 0 0; }
+        .dd-fav-button { width:100%; padding:12px 17px; border:1px solid #cfcafb; border-radius:11px; background:#f0efff; color:#5646d6; font-family:inherit; font-weight:600; cursor:pointer; }
+        .dd-fav-button.saved { background:#fff0f3; color:#c43f61; border-color:#f7c3d0; }
+        .dd-notice { margin-bottom:20px; background:#eaf8ef; padding:13px 16px; color:#16804c; border-radius:12px; font-size:13px; }
+        .dd-review-summary { padding:14px 16px; border-radius:12px; background:#f7f6ff; margin:14px 0 20px; font-size:13px; }
+        .dd-review-summary b { color:#5c50dd; font-size:22px; }
+        .dd-review-form { margin-top:20px; padding:20px; background:#f8f9fe; border-radius:13px; }
+        .dd-review-form label { display:block; margin:12px 0 6px; font-size:13px; font-weight:600; }
+        .dd-review-form select, .dd-review-form textarea { width:100%; border:1px solid #dee2ef; border-radius:10px; padding:12px; font:inherit; color:#27324a; background:white; }
+        .dd-review-form textarea { min-height:100px; resize:vertical; }
+        .dd-review-button { background:#635bff; color:white; border:0; padding:11px 18px; border-radius:10px; margin-top:12px; font:inherit; cursor:pointer; }
+        .dd-review-entry { padding:17px 0; border-top:1px solid #eceef6; }
+        .dd-review-entry b { font-size:14px; color:#263147; }
+        .dd-review-entry small { color:#8992a5; font-size:11px; }
+        .dd-review-entry p { margin-top:10px; white-space:pre-wrap; overflow-wrap:anywhere; font-size:13px; color:#596579; }
+        .dd-guest-hint { font-size:13px; color:#8490a5; margin:12px 0; }
+        .dd-guest-hint a { color:#635bff; font-weight:600; }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="dd-page">
+
+    <!-- NAVBAR -->
+
+    <header class="dd-nav">
+
+        <div class="dd-nav-inner">
+
+            <a class="dd-logo" href="/">DormHub</a>
+
+            <nav class="dd-nav-links" aria-label="เมนูหลัก">
+
+                <a href="/">หน้าหลัก</a>
+
+                <a href="/search">หาหอพัก</a>
+
+                {{if .IsLoggedIn}}
+
+                    {{if eq .Role "landlord"}}
+
+                        <a href="/landlord">จัดการหอพัก</a>
+
+                    {{else}}
+
+                        <a href="/dashboard">Dashboard</a>
+
+                    {{end}}
+
+                    <a href="/logout" class="dd-nav-pill">
+
+                        ออกจากระบบ
+
+                    </a>
+
+                {{else}}
+
+                    <a href="/login" class="dd-nav-pill">
+
+                        เข้าสู่ระบบ
+
+                    </a>
+
+                {{end}}
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <main class="dd-main">
+
+        <!-- BACK BUTTON -->
+
+        <a href="/search" class="dd-back">
+
+            ← กลับไปหน้าค้นหาหอพัก
+
+        </a>
+
+        {{if .Notice}}<div class="dd-notice" role="status">✅ {{.Notice}}</div>{{end}}
+
+        <!-- DORM HEADER -->
+
+        <div class="dd-top">
+
+            <div>
+
+                <h1>🏢 {{.Dorm.Name}}</h1>
+
+                <p class="dd-address">
+
+                    📍 {{.Dorm.Address}}
+
+                </p>
+
+            </div>
+
+            {{if .HasRooms}}
+
+                <span class="dd-availability">
+
+                    ● มีห้องว่าง {{.RoomCount}} ห้อง
+
+                </span>
+
+            {{else}}
+
+                <span class="dd-availability dd-empty">
+
+                    ยังไม่มีห้องว่าง
+
+                </span>
+
+            {{end}}
+
+        </div>
+
+        <!-- DORM IMAGE & SUMMARY -->
+
+        <div class="dd-hero">
+
+            <div class="dd-photo">
+
+                {{if .Dorm.Image}}
+
+                    <img
+
+                        src="{{.Dorm.Image}}"
+
+                        alt="ภาพหอพัก {{.Dorm.Name}}"
+
+                    >
+
+                {{else}}
+
+                    <span
+
+                        class="dd-photo-placeholder"
+
+                        aria-label="ไม่มีรูปหอพัก"
+
+                    >
+
+                        🏠
+
+                    </span>
+
+                {{end}}
+
+            </div>
+
+            <aside
+
+                class="dd-summary"
+
+                aria-label="สรุปราคาและจำนวนห้องว่าง"
+
+            >
+
+                <div class="dd-summary-label">
+
+                    ราคาเริ่มต้น
+
+                </div>
+
+                {{if .HasRooms}}
+
+                    <div class="dd-summary-price">
+
+                        ฿{{printf "%.2f" .MinPrice}}
+
+                    </div>
+
+                    <div class="dd-summary-unit">
+
+                        ต่อเดือน
+
+                    </div>
+
+                {{else}}
+
+                    <div
+
+                        class="dd-summary-price"
+
+                        style="font-size:23px"
+
+                    >
+
+                        ยังไม่มีราคา
+
+                    </div>
+
+                    <div class="dd-summary-unit">
+
+                        รอห้องพักเปิดให้เช่า
+
+                    </div>
+
+                {{end}}
+
+                <div class="dd-summary-line"></div>
+
+                <div class="dd-summary-label">
+
+                    ห้องพักที่เปิดให้เช่า
+
+                </div>
+
+                <div class="dd-summary-count">
+
+                    🛏️ {{.RoomCount}} ห้อง
+
+                </div>
+
+                <div class="dd-summary-unit">
+
+                    แสดงเฉพาะห้องที่มีสถานะว่าง
+
+                </div>
+
+            </aside>
+
+        </div>
+
+        <!-- CONTENT -->
+
+        <div class="dd-content">
+
+            <div>
+
+                <!-- DORM DESCRIPTION -->
+
+                <section class="dd-panel">
+
+                    <h2>รายละเอียดหอพัก</h2>
+
+                    {{if .Dorm.Description}}
+
+                        <p class="dd-description">
+
+                            {{.Dorm.Description}}
+
+                        </p>
+
+                    {{else}}
+
+                        <p class="dd-muted">
+
+                            เจ้าของหอพักยังไม่ได้ระบุรายละเอียดเพิ่มเติม
+
+                        </p>
+
+                    {{end}}
+
+                </section>
+
+                <!-- AVAILABLE ROOMS -->
+
+                <section class="dd-panel">
+
+                    <h2>🛏️ ห้องพักที่ว่าง</h2>
+
+                    {{if .Rooms}}
+
+                        {{range .Rooms}}
+
+                            <article class="dd-room">
+
+                                <div>
+
+                                    <h3>
+
+                                        🚪 ห้อง {{.RoomNumber}}
+
+                                    </h3>
+
+                                    <p class="dd-room-info">
+
+                                        {{if eq .RoomType "air"}}
+
+                                            ❄️ ห้องแอร์
+
+                                        {{else if eq .RoomType "fan"}}
+
+                                            🌀 ห้องพัดลม
+
+                                        {{else}}
+
+                                            {{.RoomType}}
+
+                                        {{end}}
+
+                                        · 🟢 ว่าง
+
+                                    </p>
+
+                                    {{if .Description}}
+
+                                        <p class="dd-room-desc">
+
+                                            {{.Description}}
+
+                                        </p>
+
+                                    {{end}}
+
+                                </div>
+
+                                <div class="dd-room-right">
+
+                                    <span class="dd-room-price">
+
+                                        ฿{{printf "%.2f" .Price}}
+
+                                        <small
+
+                                            style="font-size:12px;font-weight:400"
+
+                                        >
+
+                                            /เดือน
+
+                                        </small>
+
+                                    </span>
+
+                                    {{if $.IsLoggedIn}}
+    {{if eq $.Role "user"}}
+        <a class="dd-request" href="/rental/request?room_id={{.ID}}">ขอเช่าห้องพัก</a>
+        <small class="dd-request-note">ส่งคำขอถึงเจ้าของหอพัก</small>
+    {{else}}
+        <button class="dd-request" type="button" disabled>ขอเช่าห้องพัก</button>
+        <small class="dd-request-note">กรุณาใช้บัญชีผู้เช่า (user)</small>
+    {{end}}
+{{else}}
+
+                                        <a
+
+                                            class="dd-request"
+
+                                            href="/login"
+
+                                        >
+
+                                            เข้าสู่ระบบเพื่อขอเช่า
+
+                                        </a>
+
+                                        <small class="dd-request-note">
+
+                                            ต้องเข้าสู่ระบบก่อนยื่นคำขอ
+
+                                        </small>
+
+                                    {{end}}
+
+                                </div>
+
+                            </article>
+
+                        {{end}}
+
+                    {{else}}
+
+                        <!-- NO AVAILABLE ROOMS -->
+
+                        <div class="dd-no-rooms">
+
+                            <div style="font-size:42px">
+
+                                🏠
+
+                            </div>
+
+                            <strong>
+
+                                ยังไม่มีห้องพักว่างในขณะนี้
+
+                            </strong>
+
+                            <p>
+
+                                กลับมาดูอีกครั้งเมื่อมีห้องเปิดให้เช่า
+
+                            </p>
+
+                        </div>
+
+                    {{end}}
+
+                </section>
+
+
+                <section class="dd-panel" id="reviews">
+                    <h2>⭐ คะแนนและรีวิวหอพัก</h2>
+                    <div class="dd-review-summary">
+                        {{if gt .ReviewCount 0}}
+                            <b>⭐ {{printf "%.1f" .AverageRating}} / 5</b>
+                            <span>จาก {{.ReviewCount}} รีวิว</span>
+                        {{else}}
+                            <span>ยังไม่มีรีวิวสำหรับหอพักนี้</span>
+                        {{end}}
+                    </div>
+
+                    {{if and .IsLoggedIn (eq .Role "user")}}
+                        <form class="dd-review-form" action="/reviews/save" method="POST">
+                            <h3>{{if .HasMyReview}}แก้ไขรีวิวของฉัน{{else}}เขียนรีวิวหอพัก{{end}}</h3>
+                            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                            <input type="hidden" name="dorm_id" value="{{.Dorm.ID}}">
+                            <label for="review-rating">คะแนน (1–5 ดาว)</label>
+                            <select id="review-rating" name="rating" required>
+                                <option value="5" {{if eq .MyRating 5}}selected{{end}}>⭐⭐⭐⭐⭐ · 5 ดาว</option>
+                                <option value="4" {{if eq .MyRating 4}}selected{{end}}>⭐⭐⭐⭐ · 4 ดาว</option>
+                                <option value="3" {{if eq .MyRating 3}}selected{{end}}>⭐⭐⭐ · 3 ดาว</option>
+                                <option value="2" {{if eq .MyRating 2}}selected{{end}}>⭐⭐ · 2 ดาว</option>
+                                <option value="1" {{if eq .MyRating 1}}selected{{end}}>⭐ · 1 ดาว</option>
+                            </select>
+                            <label for="review-comment">ความคิดเห็น</label>
+                            <textarea id="review-comment" name="comment" maxlength="1000" placeholder="ประสบการณ์เกี่ยวกับหอพักนี้...">{{.MyComment}}</textarea>
+                            <button class="dd-review-button" type="submit">{{if .HasMyReview}}บันทึกการแก้ไข{{else}}ส่งรีวิว{{end}}</button>
+                        </form>
+                    {{else if not .IsLoggedIn}}
+                        <p class="dd-guest-hint"><a href="/login">เข้าสู่ระบบ</a> เพื่อเขียนรีวิวหรือบันทึกหอพัก</p>
+                    {{end}}
+
+                    <div style="margin-top:25px">
+                    {{range .Reviews}}
+                        <article class="dd-review-entry">
+                            <div><b>👤 {{.Name}}</b> · <b>⭐ {{.Rating}}/5</b></div>
+                            <small>{{.CreatedAt}}</small>
+                            {{if .Comment}}<p>{{.Comment}}</p>{{end}}
+                        </article>
+                    {{else}}
+                        <p class="dd-guest-hint">ยังไม่มีความคิดเห็น เป็นคนแรกที่ให้คะแนนได้เลย</p>
+                    {{end}}
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+
+            <aside>
+                <section class="dd-panel">
+                    <h2>❤️ บันทึกหอพักนี้</h2>
+                    {{if and .IsLoggedIn (eq .Role "user")}}
+                        <form class="dd-fav-form" action="/favorites/toggle" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                            <input type="hidden" name="dorm_id" value="{{.Dorm.ID}}">
+                            {{if .IsFavorite}}
+                                <input type="hidden" name="action" value="remove">
+                                <button class="dd-fav-button saved" type="submit">♥ บันทึกไว้แล้ว · นำออก</button>
+                            {{else}}
+                                <input type="hidden" name="action" value="add">
+                                <button class="dd-fav-button" type="submit">♡ เพิ่มในรายการโปรด</button>
+                            {{end}}
+                        </form>
+                        <p class="dd-guest-hint"><a href="/favorites">ดูรายการโปรดของฉัน →</a></p>
+                    {{else if not .IsLoggedIn}}
+                        <p class="dd-guest-hint"><a href="/login">เข้าสู่ระบบ</a> เพื่อบันทึกหอพัก</p>
+                    {{else}}
+                        <p class="dd-guest-hint">รายการโปรดสำหรับบัญชีผู้เช่า</p>
+                    {{end}}
+                </section>
+
+                <section class="dd-panel dd-help">
+
+                    <h2>สนใจห้องพักนี้?</h2>
+
+                    <p>
+
+                        ดูข้อมูลและราคาได้จากรายการห้องว่าง
+
+                        คุณสามารถส่งคำขอเช่าออนไลน์ได้ทันที
+
+                        โดยเจ้าของหอพักจะตรวจสอบคำขอของคุณผ่าน DormHub
+
+                    </p>
+
+                    <p>
+
+                        <a href="/search">
+
+                            ← ดูหอพักอื่น ๆ
+
+                        </a>
+
+                    </p>
+
+                </section>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

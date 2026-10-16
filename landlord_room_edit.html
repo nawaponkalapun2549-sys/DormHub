@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>แก้ไขห้องพัก | DormHub</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        .edit-page {
+            min-height: 100vh;
+            background: #f7f8fc;
+            padding: 44px 20px 80px;
+        }
+
+        .edit-container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .edit-back {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #635bff;
+            font-size: 13px;
+        }
+
+        .edit-heading {
+            margin-bottom: 25px;
+        }
+
+        .edit-heading h1 {
+            font-family: "Kanit", sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.35;
+            color: #172033;
+        }
+
+        .edit-heading p {
+            margin-top: 6px;
+            color: #8792a5;
+            font-size: 13px;
+        }
+
+        .edit-card {
+            padding: 34px;
+            border-radius: 20px;
+            background: #fff;
+            border: 1px solid #edf0f5;
+            box-shadow: 0 15px 40px rgba(31,41,55,.05);
+        }
+
+        .edit-card h2 {
+            font-family: "Kanit", sans-serif;
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .edit-subtitle {
+            font-size: 12px;
+            color: #98a2b3;
+            margin-bottom: 26px;
+        }
+
+        .edit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .edit-field {
+            margin-bottom: 21px;
+            min-width: 0;
+        }
+
+        .edit-field label {
+            display: block;
+            margin-bottom: 8px;
+            color: #344054;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .edit-field input,
+        .edit-field select,
+        .edit-field textarea {
+            display: block;
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e2e6ef;
+            border-radius: 11px;
+            outline: none;
+            background: #fff;
+            color: #172033;
+            font-family: "Prompt", sans-serif;
+            font-size: 13px;
+        }
+
+        .edit-field input:focus,
+        .edit-field select:focus,
+        .edit-field textarea:focus {
+            border-color: #635bff;
+            box-shadow: 0 0 0 3px rgba(99,91,255,.1);
+        }
+
+        .edit-field textarea {
+            resize: vertical;
+            min-height: 115px;
+        }
+
+        .edit-field small {
+            display: block;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #98a2b3;
+        }
+
+        .edit-required {
+            color: #e74c3c;
+        }
+
+        .edit-error {
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            background: #fef3f2;
+            color: #b42318;
+            font-size: 12px;
+        }
+
+        .edit-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid #edf0f5;
+            padding-top: 23px;
+            margin-top: 12px;
+        }
+
+        .edit-cancel,
+        .edit-submit {
+            padding: 12px 21px;
+            border-radius: 10px;
+            font-family: "Prompt", sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .edit-cancel {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            color: #667085;
+        }
+
+        .edit-submit {
+            border: none;
+            color: white;
+            background: linear-gradient(
+                135deg,
+                #5b55e8,
+                #7c3aed
+            );
+        }
+
+        .edit-submit:hover {
+            filter: brightness(1.08);
+        }
+
+        @media (max-width: 600px) {
+            .edit-page {
+                padding: 25px 15px 50px;
+            }
+
+            .edit-heading h1 {
+                font-size: 27px;
+            }
+
+            .edit-card {
+                padding: 23px 18px;
+            }
+
+            .edit-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .edit-actions {
+                flex-direction: column;
+            }
+
+            .edit-cancel,
+            .edit-submit {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="edit-page">
+
+    <div class="edit-container">
+
+        <!-- BACK BUTTON -->
+
+        <a class="edit-back"
+           href="/landlord/rooms?dorm_id={{.Room.DormID}}">
+            ← กลับไปรายการห้องพัก
+        </a>
+
+        <!-- HEADER -->
+
+        <header class="edit-heading">
+
+            <h1>✏️ แก้ไขข้อมูลห้องพัก</h1>
+
+            <p>
+                🏢 {{.Room.DormName}}
+                · ห้อง {{.Room.RoomNumber}}
+            </p>
+
+        </header>
+
+        <!-- EDIT FORM -->
+
+        <section class="edit-card">
+
+            <h2>ข้อมูลห้องพัก</h2>
+
+            <p class="edit-subtitle">
+                เปลี่ยนแปลงข้อมูลและกดบันทึก
+                เพื่ออัปเดตห้องพักใน MySQL
+            </p>
+
+            <!-- ERROR MESSAGE -->
+
+            {{if .Error}}
+
+                <div class="edit-error" role="alert">
+                    ⚠️ {{.Error}}
+                </div>
+
+            {{end}}
+
+            <form method="POST"
+                  action="/landlord/rooms/edit?id={{.Room.ID}}">
+
+                <!-- CSRF TOKEN -->
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{.CSRFToken}}"
+                >
+
+                <!-- ROOM NUMBER & ROOM TYPE -->
+
+                <div class="edit-grid">
+
+                    <div class="edit-field">
+
+                        <label for="room_number">
+                            🚪 เลขห้อง
+                            <span class="edit-required">*</span>
+                        </label>
+
+                        <input
+                            id="room_number"
+                            type="text"
+                            name="room_number"
+                            value="{{.Room.RoomNumber}}"
+                            maxlength="20"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="edit-field">
+
+                        <label for="room_type">
+                            🛏️ ประเภทห้อง
+                            <span class="edit-required">*</span>
+                        </label>
+
+                        <select
+                            id="room_type"
+                            name="room_type"
+                            required
+                        >
+
+                            <option
+                                value="air"
+                                {{if eq .Room.RoomType "air"}}selected{{end}}
+                            >
+                                ❄️ ห้องแอร์
+                            </option>
+
+                            <option
+                                value="fan"
+                                {{if eq .Room.RoomType "fan"}}selected{{end}}
+                            >
+                                🌀 ห้องพัดลม
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- PRICE & STATUS -->
+
+                <div class="edit-grid">
+
+                    <div class="edit-field">
+
+                        <label for="price">
+                            💰 ราคา / เดือน (บาท)
+                            <span class="edit-required">*</span>
+                        </label>
+
+                        <input
+                            id="price"
+                            type="number"
+                            name="price"
+                            value="{{printf "%.2f" .Room.Price}}"
+                            min="0.01"
+                            max="99999999.99"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="edit-field">
+
+                        <label for="status">
+                            📋 สถานะห้องพัก
+                            <span class="edit-required">*</span>
+                        </label>
+
+                        <select
+                            id="status"
+                            name="status"
+                            required
+                        >
+
+                            <option
+                                value="available"
+                                {{if eq .Room.Status "available"}}selected{{end}}
+                            >
+                                🟢 ว่าง
+                            </option>
+
+                            <option
+                                value="occupied"
+                                {{if eq .Room.Status "occupied"}}selected{{end}}
+                            >
+                                🔴 มีผู้เช่าแล้ว
+                            </option>
+
+                            <option
+                                value="maintenance"
+                                {{if eq .Room.Status "maintenance"}}selected{{end}}
+                            >
+                                🟡 ปิดปรับปรุง
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <!-- DESCRIPTION -->
+
+                <div class="edit-field">
+
+                    <label for="description">
+                        📝 รายละเอียดห้องพัก
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        maxlength="5000"
+                        placeholder="เช่น ห้องแอร์ มีเตียง ตู้เสื้อผ้า ห้องน้ำในตัว"
+                    >{{.Room.Description}}</textarea>
+
+                    <small>
+                        ข้อมูลที่แก้ไขจะใช้แสดง
+                        ในหน้ารายละเอียดห้องพักภายหลัง
+                    </small>
+
+                </div>
+
+                <!-- ACTION BUTTONS -->
+
+                <div class="edit-actions">
+
+                    <a class="edit-cancel"
+                       href="/landlord/rooms?dorm_id={{.Room.DormID}}">
+                        ยกเลิก
+                    </a>
+
+                    <button
+                        class="edit-submit"
+                        type="submit"
+                    >
+                        💾 บันทึกการแก้ไข
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+</main>
+
+</body>
+</html>

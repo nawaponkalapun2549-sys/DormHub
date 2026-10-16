@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รีวิวของฉัน | DormHub</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family:'Prompt',sans-serif;background:#f7f8fc;color:#253047;min-height:100vh; }
+    .page { max-width:1000px;margin:auto;padding:36px 22px 85px; }
+    .back { display:inline-block;margin-bottom:20px;font-size:13px;color:#6258e9; }
+    .header { display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;margin-bottom:25px; }
+    h1 { font:600 33px 'Kanit',sans-serif; }.subtitle { font-size:13px;color:#8792a5; }
+    .action { display:inline-block;background:linear-gradient(135deg,#5b55e8,#7c3aed);color:white;padding:12px 18px;border-radius:11px;font-size:13px; }
+    .list { display:grid;gap:16px; }
+    .card { background:#fff;border:1px solid #e8ebf4;border-radius:17px;padding:26px; }
+    .top { display:flex;align-items:start;justify-content:space-between;gap:12px;flex-wrap:wrap; }
+    .name { font:600 21px 'Kanit',sans-serif;color:#29354f; }
+    .date { color:#8b95a6;font-size:12px;margin:4px 0 12px; }
+    .stars { border-radius:30px;padding:8px 13px;background:#fff4d8;color:#a56e00;font-size:13px;font-weight:600; }
+    .comment { padding:16px;background:#f8f9fd;border-radius:12px;color:#5e6c81;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.7; }
+    .buttons { display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:17px; }
+    .view,.delete { display:inline-block;border:0;border-radius:10px;padding:11px 16px;font:500 13px 'Prompt',sans-serif;cursor:pointer; }
+    .view { color:white;background:#635bff; }.delete { color:#ba4258;background:#fff0f2; }
+    .empty { background:#fff;border:1px dashed #cfd4e7;border-radius:18px;padding:75px 25px;text-align:center; }
+    .empty h2 { font:500 23px 'Kanit',sans-serif;margin:10px 0 6px; }.empty p { font-size:13px;color:#8792a5;margin-bottom:20px; }
+    .notice { background:#e7f8ec;color:#167c47;padding:13px 17px;border-radius:11px;font-size:13px;margin-bottom:17px; }
+    @media(max-width:600px){.page{padding:24px 14px 60px;}h1{font-size:27px;}.card{padding:18px;}}
+  </style>
+</head>
+<body>
+<main class="page">
+  <a class="back" href="/dashboard">← กลับหน้า Dashboard</a>
+  <div class="header">
+    <div>
+      <h1>⭐ รีวิวของฉัน</h1>
+      <p class="subtitle">สวัสดี {{.Name}} · คุณรีวิวหอพักไว้ {{len .Reviews}} แห่ง</p>
+    </div>
+    <a class="action" href="/search">ค้นหาหอพัก</a>
+  </div>
+  {{if .Reviews}}
+    <section class="list">
+      {{range .Reviews}}
+        <article class="card">
+          <div class="top">
+            <div>
+              <h2 class="name">🏢 {{.DormName}}</h2>
+              <p class="date">รีวิวเมื่อ {{.CreatedAt}}</p>
+            </div>
+            <span class="stars">⭐ {{.Rating}} / 5</span>
+          </div>
+          {{if .Comment}}<p class="comment">{{.Comment}}</p>{{else}}<p class="comment">ให้คะแนนโดยไม่มีข้อความรีวิว</p>{{end}}
+          <div class="buttons">
+            <a class="view" href="/dorm?id={{.DormID}}#reviews">ดู / แก้ไขรีวิว →</a>
+            <form action="/reviews/delete" method="POST" onsubmit="return confirm('ยืนยันลบรีวิวนี้?');">
+              <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+              <input type="hidden" name="dorm_id" value="{{.DormID}}">
+              <button class="delete" type="submit">ลบรีวิว</button>
+            </form>
+          </div>
+        </article>
+      {{end}}
+    </section>
+  {{else}}
+    <div class="empty">
+      <div style="font-size:48px">⭐</div>
+      <h2>ยังไม่มีรีวิวของคุณ</h2>
+      <p>เลือกหอพักที่ต้องการแล้วให้คะแนนได้จากหน้ารายละเอียดหอพัก</p>
+      <a class="action" href="/search">ค้นหาหอพัก</a>
+    </div>
+  {{end}}
+</main>
+</body>
+</html>
