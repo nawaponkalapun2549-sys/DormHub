@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เพิ่มห้องพัก | DormHub</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Prompt:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        .room-page {
+            min-height: 100vh;
+            background: #f7f8fc;
+            padding: 45px 20px 80px;
+        }
+
+        .room-container {
+            max-width: 760px;
+            margin: auto;
+        }
+
+        .room-back {
+            display: inline-block;
+            margin-bottom: 24px;
+            font-size: 13px;
+            color: #635bff;
+        }
+
+        .room-header {
+            margin-bottom: 26px;
+        }
+
+        .room-header h1 {
+            font-family: "Kanit", sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .room-header p {
+            color: #8792a5;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .room-card {
+            padding: 35px;
+            border-radius: 20px;
+            background: white;
+            border: 1px solid #edf0f5;
+            box-shadow: 0 15px 40px rgba(31,41,55,.05);
+        }
+
+        .room-card h2 {
+            font-family: "Kanit", sans-serif;
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .room-field {
+            margin-bottom: 23px;
+        }
+
+        .room-field label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #344054;
+        }
+
+        .room-field input,
+        .room-field select,
+        .room-field textarea {
+            width: 100%;
+            border: 1px solid #e2e6ef;
+            border-radius: 11px;
+            padding: 12px 15px;
+            background: #fff;
+            color: #172033;
+            font-family: "Prompt", sans-serif;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .room-field input:focus,
+        .room-field select:focus,
+        .room-field textarea:focus {
+            border-color: #635bff;
+            box-shadow: 0 0 0 3px rgba(99,91,255,.1);
+        }
+
+        .room-field textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .room-field small {
+            display: block;
+            margin-top: 6px;
+            color: #98a2b3;
+            font-size: 11px;
+        }
+
+        .room-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .room-required {
+            color: #e74c3c;
+        }
+
+        .room-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 24px;
+            margin-top: 10px;
+            border-top: 1px solid #edf0f5;
+        }
+
+        .room-cancel,
+        .room-submit {
+            border-radius: 10px;
+            padding: 12px 22px;
+            font-family: "Prompt", sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .room-cancel {
+            color: #667085;
+            border: 1px solid #e5e7eb;
+            background: white;
+        }
+
+        .room-submit {
+            color: white;
+            border: none;
+            background: linear-gradient(135deg, #5b55e8, #7c3aed);
+        }
+
+        .room-submit:hover {
+            filter: brightness(1.08);
+        }
+
+        .room-error {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: #b42318;
+            background: #fef3f2;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .room-page {
+                padding: 25px 15px 50px;
+            }
+
+            .room-card {
+                padding: 24px 18px;
+            }
+
+            .room-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .room-actions {
+                flex-direction: column;
+            }
+
+            .room-cancel,
+            .room-submit {
+                text-align: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="room-page">
+    <div class="room-container">
+
+        <a href="/landlord" class="room-back">
+            ← กลับไปหน้า Landlord Dashboard
+        </a>
+
+        <div class="room-header">
+            <h1>🛏️ เพิ่มห้องพักใหม่</h1>
+            <p>จัดการห้องพักสำหรับ {{.DormName}}</p>
+        </div>
+
+        <div class="room-card">
+
+            <h2>ข้อมูลห้องพัก</h2>
+
+            {{if .Error}}
+                <div class="room-error">
+                    ⚠️ {{.Error}}
+                </div>
+            {{end}}
+
+            <form action="/landlord/rooms/add" method="POST">
+
+                <input type="hidden"
+                       name="csrf_token"
+                       value="{{.CSRFToken}}">
+
+                <input type="hidden"
+                       name="dorm_id"
+                       value="{{.DormID}}">
+
+                <div class="room-row">
+
+                    <div class="room-field">
+                        <label for="room_number">
+                            🚪 เลขห้อง
+                            <span class="room-required">*</span>
+                        </label>
+
+                        <input type="text"
+                               id="room_number"
+                               name="room_number"
+                               placeholder="เช่น A101"
+                               maxlength="20"
+                               required>
+                    </div>
+
+                    <div class="room-field">
+                        <label for="room_type">
+                            🛏️ ประเภทห้อง
+                            <span class="room-required">*</span>
+                        </label>
+
+                        <select id="room_type"
+                                name="room_type"
+                                required>
+                            <option value="">เลือกประเภทห้อง</option>
+                            <option value="air">ห้องแอร์</option>
+                            <option value="fan">ห้องพัดลม</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="room-row">
+
+                    <div class="room-field">
+                        <label for="price">
+                            💰 ราคา / เดือน (บาท)
+                            <span class="room-required">*</span>
+                        </label>
+
+                        <input type="number"
+                               id="price"
+                               name="price"
+                               placeholder="เช่น 3500"
+                               min="1"
+                               max="99999999"
+                               step="0.01"
+                               required>
+                    </div>
+
+                    <div class="room-field">
+                        <label for="status">
+                            📋 สถานะห้องพัก
+                            <span class="room-required">*</span>
+                        </label>
+
+                        <select id="status"
+                                name="status"
+                                required>
+                            <option value="available">🟢 ว่าง</option>
+                            <option value="occupied">🔴 มีผู้เช่าแล้ว</option>
+                            <option value="maintenance">🟡 ปิดปรับปรุง</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="room-field">
+                    <label for="description">
+                        📝 รายละเอียดห้องพัก
+                    </label>
+
+                    <textarea id="description"
+                              name="description"
+                              maxlength="5000"
+                              placeholder="เช่น ห้องแอร์ มีเตียง ตู้เสื้อผ้า โต๊ะทำงาน และห้องน้ำในตัว"></textarea>
+
+                    <small>
+                        ระบุสิ่งอำนวยความสะดวกภายในห้อง
+                    </small>
+                </div>
+
+                <div class="room-actions">
+                    <a href="/landlord" class="room-cancel">
+                        ยกเลิก
+                    </a>
+
+                    <button type="submit" class="room-submit">
+                        + บันทึกห้องพัก
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

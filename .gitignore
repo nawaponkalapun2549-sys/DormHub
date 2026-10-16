@@ -1,0 +1,9 @@
+# Uploaded user data and local secrets
+.env
+.env.*
+!.env.example
+private_uploads/
+static/uploads/
+*.exe
+*.log
+.DS_Store

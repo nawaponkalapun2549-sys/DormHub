@@ -1,0 +1,13 @@
+STEP 15 TEST PLAN
+1. สมัคร User ปกติ: role=user ไม่มีคำขอเจ้าของหอ
+2. สมัคร Landlord + TXT ตัวอย่าง: users.role=user, landlord_applications.status=pending
+3. สมัคร Landlord โดยไม่แนบเอกสาร: ต้องไม่สร้างบัญชี
+4. แนบไฟล์ .exe / ไฟล์ปลอม / เกิน 3 MB: ต้องปฏิเสธ
+5. Login ผู้ขอ: ไปหน้า /landlord/application-status; เปิด /landlord/add ต้องปฏิเสธ
+6. User ทั่วไปเปิด /admin/landlord-applications หรือดาวน์โหลดไฟล์: ต้องปฏิเสธ
+7. Admin เปิดหน้า /admin/landlord-applications: เห็น pending
+8. Admin กด approved: ตาราง application เป็น approved และ users.role=landlord
+9. Logout/Login ใหม่: ผู้ขอเปิด /landlord ได้
+10. สมัคร Landlord อีกบัญชีและกด rejected: role ยังเป็น user
+11. ลองกดอนุมัติซ้ำ: ต้องไม่บันทึกซ้ำ
+12. ตรวจว่ารูปหอพักเก่าและระบบเช่า/รีวิว/รายการโปรดยังใช้งานได้

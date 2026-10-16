@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>เข้าสู่ระบบ | DormHub</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/css/style.css"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, "Noto Sans Thai", sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(
+                135deg,
+                #eef4ff,
+                #f8fbff
+            );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+        }
+
+        .login-card {
+            background: #ffffff;
+
+            padding: 40px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.10);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            font-size: 30px;
+            color: #2563eb;
+            margin-bottom: 8px;
+        }
+
+        .logo p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            color: #374151;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 18px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+
+            padding: 14px 14px 14px 45px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    37,
+                    99,
+                    235,
+                    0.12
+                );
+        }
+
+        .btn-login {
+            width: 100%;
+
+            border: none;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .btn-login:hover {
+            background: #1d4ed8;
+
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            background: #fef2f2;
+
+            color: #dc2626;
+
+            border: 1px solid #fecaca;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+
+            color: #16a34a;
+
+            border: 1px solid #bbf7d0;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 14px;
+
+            text-align: center;
+        }
+
+        .register-link {
+            text-align: center;
+
+            margin-top: 25px;
+
+            font-size: 14px;
+
+            color: #6b7280;
+        }
+
+        .register-link a {
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-home:hover {
+            color: #2563eb;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icon">
+                🏠
+            </div>
+
+            <h1>DormHub</h1>
+
+            <p>
+                ระบบค้นหาและจัดการหอพัก
+            </p>
+
+        </div>
+
+
+        <!-- ERROR -->
+        {{if .Error}}
+
+        <div class="error-message">
+            ⚠️ {{.Error}}
+        </div>
+
+        {{end}}
+
+
+        <!-- SUCCESS -->
+        {{if .Success}}
+
+        <div class="success-message">
+            ✅ {{.Success}}
+        </div>
+
+        {{end}}
+
+
+        <!-- LOGIN FORM -->
+        <form
+            action="/login"
+            method="POST"
+        >
+
+            <!-- PHONE -->
+            <div class="form-group">
+
+                <label for="phone">
+                    เบอร์โทรศัพท์
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        📱
+                    </span>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="กรอกเบอร์โทรศัพท์"
+                        maxlength="10"
+                        pattern="[0-9]{10}"
+                        inputmode="numeric"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+
+                <label for="password">
+                    รหัสผ่าน
+                    <span class="required">*</span>
+                </label>
+
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="กรอกรหัสผ่าน"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+            <button
+                type="submit"
+                class="btn-login"
+            >
+                เข้าสู่ระบบ
+            </button>
+
+        </form>
+
+
+        <!-- REGISTER -->
+        <div class="register-link">
+
+            ยังไม่มีบัญชี?
+
+            <a href="/register">
+                สมัครสมาชิก
+            </a>
+
+        </div>
+
+
+        <!-- HOME -->
+        <a
+            href="/"
+            class="back-home"
+        >
+            ← กลับหน้าแรก
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
