@@ -1,4 +1,4 @@
-package main
+﻿package main
 
 import (
 	"bytes"
@@ -7,7 +7,6 @@ import (
 	"crypto/subtle"
 
 	"database/sql"
-	"fmt"
 
 	"encoding/hex"
 
@@ -121,19 +120,19 @@ func main() {
 
 	if err != nil {
 
-		log.Fatal("เปิด Database ไม่สำเร็จ:", err)
+		log.Fatal("เน€เธเธดเธ” Database เนเธกเนเธชเธณเน€เธฃเนเธ:", err)
 
 	}
 
 	if err = db.Ping(); err != nil {
 
-		log.Fatal("เชื่อมต่อ Database ไม่สำเร็จ:", err)
+		log.Fatal("เน€เธเธทเนเธญเธกเธ•เนเธญ Database เนเธกเนเธชเธณเน€เธฃเนเธ:", err)
 
 	}
 
 	log.Println("=================================")
 
-	log.Println("✅ DormHub Database Connected")
+	log.Println("โ… DormHub Database Connected")
 
 	log.Println("=================================")
 
@@ -211,7 +210,7 @@ func main() {
 
 	// =========================
 
-	log.Println("🚀 DormHub server starting")
+	log.Println("๐€ DormHub server starting")
 
 	log.Println("=================================")
 
@@ -272,7 +271,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"ไม่สามารถโหลดหน้าเว็บได้",
+			"เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเน€เธงเนเธเนเธ”เน",
 
 			http.StatusInternalServerError,
 		)
@@ -393,7 +392,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	// A small upload limit for demo documents, including form overhead.
 	r.Body = http.MaxBytesReader(w, r.Body, 4<<20)
 	if err := r.ParseMultipartForm(1 << 20); err != nil {
-		showRegisterError(w, "ข้อมูลหรือเอกสารมีขนาดใหญ่เกินกำหนด (สูงสุด 3 MB)")
+		showRegisterError(w, "เธเนเธญเธกเธนเธฅเธซเธฃเธทเธญเน€เธญเธเธชเธฒเธฃเธกเธตเธเธเธฒเธ”เนเธซเธเนเน€เธเธดเธเธเธณเธซเธเธ” (เธชเธนเธเธชเธธเธ” 3 MB)")
 		return
 	}
 	if r.MultipartForm != nil {
@@ -406,21 +405,21 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	confirm := r.FormValue("confirm_password")
 	accountType := r.FormValue("account_type")
 	if accountType != "user" && accountType != "landlord" {
-		showRegisterError(w, "กรุณาเลือกประเภทบัญชี user หรือ landlord")
+		showRegisterError(w, "เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธเธฃเธฐเน€เธ เธ—เธเธฑเธเธเธต user เธซเธฃเธทเธญ landlord")
 		return
 	}
 	if name == "" || len([]rune(name)) > 100 || len(phone) != 10 || password == "" || confirm == "" {
-		showRegisterError(w, "กรุณาตรวจสอบชื่อ เบอร์โทร 10 หลัก และรหัสผ่านให้ครบ")
+		showRegisterError(w, "เธเธฃเธธเธ“เธฒเธ•เธฃเธงเธเธชเธญเธเธเธทเนเธญ เน€เธเธญเธฃเนเนเธ—เธฃ 10 เธซเธฅเธฑเธ เนเธฅเธฐเธฃเธซเธฑเธชเธเนเธฒเธเนเธซเนเธเธฃเธ")
 		return
 	}
 	for _, c := range phone {
 		if c < '0' || c > '9' {
-			showRegisterError(w, "เบอร์โทรต้องเป็นตัวเลข 10 หลัก")
+			showRegisterError(w, "เน€เธเธญเธฃเนเนเธ—เธฃเธ•เนเธญเธเน€เธเนเธเธ•เธฑเธงเน€เธฅเธ 10 เธซเธฅเธฑเธ")
 			return
 		}
 	}
 	if len(password) < 6 || password != confirm {
-		showRegisterError(w, "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษรและยืนยันให้ตรงกัน")
+		showRegisterError(w, "เธฃเธซเธฑเธชเธเนเธฒเธเธ•เนเธญเธเธกเธตเธญเธขเนเธฒเธเธเนเธญเธข 6 เธ•เธฑเธงเธญเธฑเธเธฉเธฃเนเธฅเธฐเธขเธทเธเธขเธฑเธเนเธซเนเธ•เธฃเธเธเธฑเธ")
 		return
 	}
 
@@ -430,41 +429,41 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	if accountType == "landlord" {
 		dormName = strings.TrimSpace(r.FormValue("dorm_name"))
 		if dormName == "" || len([]rune(dormName)) > 150 {
-			showRegisterError(w, "กรุณากรอกชื่อหอพักตัวอย่างไม่เกิน 150 ตัวอักษร")
+			showRegisterError(w, "เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธเธทเนเธญเธซเธญเธเธฑเธเธ•เธฑเธงเธญเธขเนเธฒเธเนเธกเนเน€เธเธดเธ 150 เธ•เธฑเธงเธญเธฑเธเธฉเธฃ")
 			return
 		}
 		var err error
 		document, header, err = r.FormFile("proof_document")
 		if err != nil {
-			showRegisterError(w, "กรุณาแนบไฟล์เอกสารทดสอบ")
+			showRegisterError(w, "เธเธฃเธธเธ“เธฒเนเธเธเนเธเธฅเนเน€เธญเธเธชเธฒเธฃเธ—เธ”เธชเธญเธ")
 			return
 		}
 		defer document.Close()
 		if header.Size == 0 || header.Size > 3<<20 {
-			showRegisterError(w, "เอกสารต้องมีขนาด 1 ไบต์ ถึง 3 MB")
+			showRegisterError(w, "เน€เธญเธเธชเธฒเธฃเธ•เนเธญเธเธกเธตเธเธเธฒเธ” 1 เนเธเธ•เน เธ–เธถเธ 3 MB")
 			return
 		}
 	}
 	var existing int
 	if err := db.QueryRowContext(r.Context(), "SELECT COUNT(*) FROM users WHERE phone=?", phone).Scan(&existing); err != nil {
 		log.Println("Register user check error:", err)
-		showRegisterError(w, "ไม่สามารถตรวจสอบเบอร์โทรได้")
+		showRegisterError(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเน€เธเธญเธฃเนเนเธ—เธฃเนเธ”เน")
 		return
 	}
 	if existing != 0 {
-		showRegisterError(w, "เบอร์โทรนี้ถูกใช้งานแล้ว")
+		showRegisterError(w, "เน€เธเธญเธฃเนเนเธ—เธฃเธเธตเนเธ–เธนเธเนเธเนเธเธฒเธเนเธฅเนเธง")
 		return
 	}
 	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		showRegisterError(w, "ไม่สามารถสร้างรหัสผ่านได้")
+		showRegisterError(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเธฃเธซเธฑเธชเธเนเธฒเธเนเธ”เน")
 		return
 	}
 
 	tx, err := db.BeginTx(r.Context(), nil)
 	if err != nil {
 		log.Println("Register tx error:", err)
-		showRegisterError(w, "ฐานข้อมูลไม่พร้อมใช้งาน")
+		showRegisterError(w, "เธเธฒเธเธเนเธญเธกเธนเธฅเนเธกเนเธเธฃเนเธญเธกเนเธเนเธเธฒเธ")
 		return
 	}
 	defer tx.Rollback()
@@ -472,12 +471,12 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	inserted, err := tx.ExecContext(r.Context(), "INSERT INTO users (name,phone,password_hash,role) VALUES (?,?,?,'user')", name, phone, string(hashed))
 	if err != nil {
 		log.Println("Register insert error:", err)
-		showRegisterError(w, "ไม่สามารถสร้างบัญชีได้ (เบอร์อาจซ้ำ)")
+		showRegisterError(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเธเธฑเธเธเธตเนเธ”เน (เน€เธเธญเธฃเนเธญเธฒเธเธเนเธณ)")
 		return
 	}
 	userID, err := inserted.LastInsertId()
 	if err != nil {
-		showRegisterError(w, "ไม่สามารถสร้างบัญชีได้")
+		showRegisterError(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเธเธฑเธเธเธตเนเธ”เน")
 		return
 	}
 
@@ -498,13 +497,13 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
             VALUES (?,?,?,?,'pending')`, userID, dormName, filepath.ToSlash(savedPath), filepath.Base(strings.ReplaceAll(header.Filename, "\\", "/")))
 		if err != nil {
 			log.Println("Landlord application insert error:", err)
-			showRegisterError(w, "บันทึกคำขอไม่สำเร็จ กรุณาตรวจสอบว่า Import SQL ขั้นตอน 15 แล้ว")
+			showRegisterError(w, "เธเธฑเธเธ—เธถเธเธเธณเธเธญเนเธกเนเธชเธณเน€เธฃเนเธ เธเธฃเธธเธ“เธฒเธ•เธฃเธงเธเธชเธญเธเธงเนเธฒ Import SQL เธเธฑเนเธเธ•เธญเธ 15 เนเธฅเนเธง")
 			return
 		}
 	}
 	if err := tx.Commit(); err != nil {
 		log.Println("Register commit error:", err)
-		showRegisterError(w, "บันทึกการสมัครไม่สำเร็จ")
+		showRegisterError(w, "เธเธฑเธเธ—เธถเธเธเธฒเธฃเธชเธกเธฑเธเธฃเนเธกเนเธชเธณเน€เธฃเนเธ")
 		return
 	}
 	savedPath = "" // Keep the document only after successful DB commit.
@@ -518,7 +517,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 func renderRegister(w http.ResponseWriter, message string) {
 	t, err := template.ParseFiles("templates/register.html")
 	if err != nil {
-		http.Error(w, "โหลดหน้าสมัครไม่ได้", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธซเธเนเธฒเธชเธกเธฑเธเธฃเนเธกเนเนเธ”เน", 500)
 		return
 	}
 	if err := t.Execute(w, struct{ Error string }{Error: message}); err != nil {
@@ -554,7 +553,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 				w,
 
-				"ไม่สามารถโหลดหน้า Login ได้",
+				"เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒ Login เนเธ”เน",
 
 				http.StatusInternalServerError,
 			)
@@ -575,9 +574,9 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if r.URL.Query().Get("registered") == "1" {
-			data.Success = "สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ"
+			data.Success = "เธชเธกเธฑเธเธฃเธชเธกเธฒเธเธดเธเธชเธณเน€เธฃเนเธ! เธเธฃเธธเธ“เธฒเน€เธเนเธฒเธชเธนเนเธฃเธฐเธเธ"
 			if r.URL.Query().Get("landlord") == "pending" {
-				data.Success = "สมัครบัญชีเจ้าของหอสำเร็จ! เอกสารตัวอย่างอยู่ระหว่างรอ Admin ตรวจสอบ กรุณา Login เพื่อดูสถานะ"
+				data.Success = "เธชเธกเธฑเธเธฃเธเธฑเธเธเธตเน€เธเนเธฒเธเธญเธเธซเธญเธชเธณเน€เธฃเนเธ! เน€เธญเธเธชเธฒเธฃเธ•เธฑเธงเธญเธขเนเธฒเธเธญเธขเธนเนเธฃเธฐเธซเธงเนเธฒเธเธฃเธญ Admin เธ•เธฃเธงเธเธชเธญเธ เธเธฃเธธเธ“เธฒ Login เน€เธเธทเนเธญเธ”เธนเธชเธ–เธฒเธเธฐ"
 			}
 		}
 
@@ -627,7 +626,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"ข้อมูลไม่ถูกต้อง",
+			"เธเนเธญเธกเธนเธฅเนเธกเนเธ–เธนเธเธ•เนเธญเธ",
 
 			http.StatusBadRequest,
 		)
@@ -661,7 +660,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"กรุณากรอกเบอร์โทรและรหัสผ่าน",
+			"เธเธฃเธธเธ“เธฒเธเธฃเธญเธเน€เธเธญเธฃเนเนเธ—เธฃเนเธฅเธฐเธฃเธซเธฑเธชเธเนเธฒเธ",
 		)
 
 		return
@@ -839,7 +838,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"เบอร์โทรหรือรหัสผ่านไม่ถูกต้อง",
+			"เน€เธเธญเธฃเนเนเธ—เธฃเธซเธฃเธทเธญเธฃเธซเธฑเธชเธเนเธฒเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ",
 		)
 
 		return
@@ -865,7 +864,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"เบอร์โทรหรือรหัสผ่านไม่ถูกต้อง",
+			"เน€เธเธญเธฃเนเนเธ—เธฃเธซเธฃเธทเธญเธฃเธซเธฑเธชเธเนเธฒเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ",
 		)
 
 		return
@@ -898,7 +897,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"ไม่สามารถสร้าง Session ได้",
+			"เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธ Session เนเธ”เน",
 
 			http.StatusInternalServerError,
 		)
@@ -952,7 +951,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"ไม่สามารถบันทึก Session ได้",
+			"เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน",
 
 			http.StatusInternalServerError,
 		)
@@ -969,7 +968,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf(
 
-		"Login สำเร็จ: ID=%d Name=%s Phone=%s Role=%s",
+		"Login เธชเธณเน€เธฃเนเธ: ID=%d Name=%s Phone=%s Role=%s",
 
 		id,
 
@@ -1163,7 +1162,7 @@ func logoutHandler(
 
 	}
 
-	log.Println("Logout สำเร็จ")
+	log.Println("Logout เธชเธณเน€เธฃเนเธ")
 
 	http.Redirect(
 
@@ -1323,7 +1322,7 @@ func dashboardHandler(
 
 	if !ok || name == "" {
 
-		name = "ผู้ใช้งาน"
+		name = "เธเธนเนเนเธเนเธเธฒเธ"
 
 	}
 
@@ -1367,7 +1366,7 @@ func dashboardHandler(
 
 			w,
 
-			"ไม่สามารถโหลด Dashboard ได้",
+			"เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ” Dashboard เนเธ”เน",
 
 			http.StatusInternalServerError,
 		)
@@ -1570,17 +1569,17 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 	switch data.Location {
 
-	case "มหาสารคาม":
+	case "เธกเธซเธฒเธชเธฒเธฃเธเธฒเธก":
 
 		query += " AND d.address LIKE ?"
 
-		args = append(args, "%มหาสารคาม%")
+		args = append(args, "%เธกเธซเธฒเธชเธฒเธฃเธเธฒเธก%")
 
-	case "มมส":
+	case "เธกเธกเธช":
 
 		query += " AND (d.address LIKE ? OR d.address LIKE ?)"
 
-		args = append(args, "%มมส%", "%มหาวิทยาลัยมหาสารคาม%")
+		args = append(args, "%เธกเธกเธช%", "%เธกเธซเธฒเธงเธดเธ—เธขเธฒเธฅเธฑเธขเธกเธซเธฒเธชเธฒเธฃเธเธฒเธก%")
 
 	default:
 
@@ -1620,13 +1619,13 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 		query += " AND (LOWER(r.room_type) LIKE ? OR r.room_type LIKE ?)"
 
-		args = append(args, "%air%", "%แอร์%")
+		args = append(args, "%air%", "%เนเธญเธฃเน%")
 
 	case "fan":
 
 		query += " AND (LOWER(r.room_type) LIKE ? OR r.room_type LIKE ?)"
 
-		args = append(args, "%fan%", "%พัดลม%")
+		args = append(args, "%fan%", "%เธเธฑเธ”เธฅเธก%")
 
 	default:
 
@@ -1666,7 +1665,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Search Query Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดในการค้นหาหอพัก", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธเนเธเธซเธฒเธซเธญเธเธฑเธ", http.StatusInternalServerError)
 
 		return
 
@@ -1686,7 +1685,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Search Scan Error:", err)
 
-			http.Error(w, "ไม่สามารถอ่านข้อมูลหอพักได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 			return
 
@@ -1700,7 +1699,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Search Rows Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดในการอ่านผลค้นหา", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธญเนเธฒเธเธเธฅเธเนเธเธซเธฒ", http.StatusInternalServerError)
 
 		return
 
@@ -1714,7 +1713,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Search Template Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดหน้าค้นหาได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเธเนเธเธซเธฒเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -1742,7 +1741,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 
 func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
-	// ตรวจสอบ URL
+	// เธ•เธฃเธงเธเธชเธญเธ URL
 
 	if r.URL.Path != "/landlord" {
 
@@ -1752,7 +1751,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	// อนุญาตเฉพาะ GET
+	// เธญเธเธธเธเธฒเธ•เน€เธเธเธฒเธฐ GET
 
 	if r.Method != http.MethodGet {
 
@@ -1764,7 +1763,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	// =========================
 
-	// ตรวจสอบ SESSION
+	// เธ•เธฃเธงเธเธชเธญเธ SESSION
 
 	// =========================
 
@@ -1808,7 +1807,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	// =========================
 
-	// ตรวจสิทธิ์จาก DATABASE
+	// เธ•เธฃเธงเธเธชเธดเธ—เธเธดเนเธเธฒเธ DATABASE
 
 	// =========================
 
@@ -1837,13 +1836,13 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Landlord User Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 		return
 
 	}
 
-	// เฉพาะเจ้าของหอพักเท่านั้น
+	// เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ
 
 	if role != "landlord" {
 
@@ -1851,7 +1850,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น",
+			"403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ",
 
 			http.StatusForbidden,
 		)
@@ -1862,7 +1861,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	// =========================
 
-	// โครงสร้างข้อมูลหอพัก
+	// เนเธเธฃเธเธชเธฃเนเธฒเธเธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธ
 
 	// =========================
 
@@ -1897,7 +1896,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	// =========================
 
-	// ดึงเฉพาะหอพักของเจ้าของ
+	// เธ”เธถเธเน€เธเธเธฒเธฐเธซเธญเธเธฑเธเธเธญเธเน€เธเนเธฒเธเธญเธ
 
 	// =========================
 
@@ -1962,7 +1961,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Landlord Dorm Query Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดข้อมูลหอพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -1989,7 +1988,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Landlord Dorm Scan Error:", err)
 
-			http.Error(w, "ไม่สามารถอ่านข้อมูลหอพักได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 			return
 
@@ -2007,7 +2006,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Landlord Dorm Rows Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดในการอ่านข้อมูลหอพัก", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธญเนเธฒเธเธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธ", http.StatusInternalServerError)
 
 		return
 
@@ -2015,13 +2014,13 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	rows.Close()
 
-	// จำนวนหอพักของตัวเอง
+	// เธเธณเธเธงเธเธซเธญเธเธฑเธเธเธญเธเธ•เธฑเธงเน€เธญเธ
 
 	data.DormCount = len(data.Dorms)
 
 	// =========================
 
-	// นับคำขอเช่าที่รอตรวจสอบ
+	// เธเธฑเธเธเธณเธเธญเน€เธเนเธฒเธ—เธตเนเธฃเธญเธ•เธฃเธงเธเธชเธญเธ
 
 	// =========================
 
@@ -2074,7 +2073,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Landlord Pending Count Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดข้อมูลคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -2082,7 +2081,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	// =========================
 
-	// โหลด LANDLORD.HTML
+	// เนเธซเธฅเธ” LANDLORD.HTML
 
 	// =========================
 
@@ -2095,7 +2094,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Landlord Template Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดหน้า Landlord ได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒ Landlord เนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -2103,7 +2102,7 @@ func landlordHandler(w http.ResponseWriter, r *http.Request) {
 
 	// =========================
 
-	// แสดงหน้า Dashboard
+	// เนเธชเธ”เธเธซเธเนเธฒ Dashboard
 
 	// =========================
 
@@ -2204,7 +2203,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Landlord Add Role Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 		return
 
@@ -2212,7 +2211,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if role != "landlord" {
 
-		http.Error(w, "403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 
 		return
 
@@ -2228,7 +2227,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Landlord Add CSRF Generation Error:", err)
 
-			http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+			http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 			return
 
@@ -2242,7 +2241,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Landlord Add Session Save Error:", err)
 
-			http.Error(w, "ไม่สามารถบันทึก Session ได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน", http.StatusInternalServerError)
 
 			return
 
@@ -2262,7 +2261,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err := r.ParseMultipartForm(2 << 20); err != nil {
 
-		http.Error(w, "ข้อมูลฟอร์มไม่ถูกต้องหรือมีขนาดใหญ่เกินไป", http.StatusBadRequest)
+		http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธเธซเธฃเธทเธญเธกเธตเธเธเธฒเธ”เนเธซเธเนเน€เธเธดเธเนเธ", http.StatusBadRequest)
 
 		return
 
@@ -2281,7 +2280,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 		[]byte(savedToken), []byte(submittedToken),
 	) != 1 {
 
-		http.Error(w, "403 Forbidden: CSRF Token ไม่ถูกต้อง กรุณาเปิดฟอร์มใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF Token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธเธญเธฃเนเธกเนเธซเธกเน", http.StatusForbidden)
 
 		return
 
@@ -2295,7 +2294,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if dormName == "" || address == "" {
 
-		renderLandlordAdd(w, "กรุณากรอกชื่อหอพักและที่อยู่", savedToken)
+		renderLandlordAdd(w, "เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธเธทเนเธญเธซเธญเธเธฑเธเนเธฅเธฐเธ—เธตเนเธญเธขเธนเน", savedToken)
 
 		return
 
@@ -2303,7 +2302,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if utf8.RuneCountInString(dormName) > 150 {
 
-		renderLandlordAdd(w, "ชื่อหอพักต้องไม่เกิน 150 ตัวอักษร", savedToken)
+		renderLandlordAdd(w, "เธเธทเนเธญเธซเธญเธเธฑเธเธ•เนเธญเธเนเธกเนเน€เธเธดเธ 150 เธ•เธฑเธงเธญเธฑเธเธฉเธฃ", savedToken)
 
 		return
 
@@ -2311,7 +2310,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if utf8.RuneCountInString(address) > 2000 {
 
-		renderLandlordAdd(w, "ที่อยู่ยาวเกินกำหนด", savedToken)
+		renderLandlordAdd(w, "เธ—เธตเนเธญเธขเธนเนเธขเธฒเธงเน€เธเธดเธเธเธณเธซเธเธ”", savedToken)
 
 		return
 
@@ -2319,7 +2318,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if utf8.RuneCountInString(description) > 5000 {
 
-		renderLandlordAdd(w, "รายละเอียดหอพักยาวเกินกำหนด", savedToken)
+		renderLandlordAdd(w, "เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธซเธญเธเธฑเธเธขเธฒเธงเน€เธเธดเธเธเธณเธซเธเธ”", savedToken)
 
 		return
 
@@ -2329,20 +2328,20 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 	imageURL := ""
 	imageFile, imageHeader, fileErr := r.FormFile("image_file")
 	if fileErr != nil && !errors.Is(fileErr, http.ErrMissingFile) {
-		renderLandlordAdd(w, "ไม่สามารถอ่านไฟล์รูปภาพได้ กรุณาเลือกไฟล์อีกครั้ง", savedToken)
+		renderLandlordAdd(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเนเธเธฅเนเธฃเธนเธเธ เธฒเธเนเธ”เน เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเนเธเธฅเนเธญเธตเธเธเธฃเธฑเนเธ", savedToken)
 		return
 	}
 	if fileErr == nil {
 		defer imageFile.Close()
 		// Protect against oversized uploads before touching the file system.
 		if imageHeader.Size > 5<<20 {
-			renderLandlordAdd(w, "รูปภาพต้องมีขนาดไม่เกิน 5 MB", savedToken)
+			renderLandlordAdd(w, "เธฃเธนเธเธ เธฒเธเธ•เนเธญเธเธกเธตเธเธเธฒเธ”เนเธกเนเน€เธเธดเธ 5 MB", savedToken)
 			return
 		}
 		imageURL, err = saveDormImage(imageFile)
 		if err != nil {
 			log.Println("Landlord Add Image Upload Error:", err)
-			renderLandlordAdd(w, "อัปโหลดรูปไม่สำเร็จ ใช้ไฟล์ JPG, PNG, GIF หรือ WebP ขนาดไม่เกิน 5 MB", savedToken)
+			renderLandlordAdd(w, "เธญเธฑเธเนเธซเธฅเธ”เธฃเธนเธเนเธกเนเธชเธณเน€เธฃเนเธ เนเธเนเนเธเธฅเน JPG, PNG, GIF เธซเธฃเธทเธญ WebP เธเธเธฒเธ”เนเธกเนเน€เธเธดเธ 5 MB", savedToken)
 			return
 		}
 	}
@@ -2365,7 +2364,7 @@ func landlordAddHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		log.Println("Landlord Add Insert Error:", err)
 
-		renderLandlordAdd(w, "ไม่สามารถบันทึกหอพักได้ กรุณาลองอีกครั้ง", savedToken)
+		renderLandlordAdd(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธเธซเธญเธเธฑเธเนเธ”เน เธเธฃเธธเธ“เธฒเธฅเธญเธเธญเธตเธเธเธฃเธฑเนเธ", savedToken)
 
 		return
 
@@ -2482,7 +2481,7 @@ func renderLandlordAdd(w http.ResponseWriter, errorMessage string, csrfToken str
 
 		log.Println("Landlord Add Template Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดหน้าฟอร์มได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเธเธญเธฃเนเธกเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -2585,7 +2584,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room Add Role Query Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 		return
 
@@ -2593,7 +2592,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if role != "landlord" {
 
-		http.Error(w, "403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 
 		return
 
@@ -2611,7 +2610,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		if err := r.ParseForm(); err != nil {
 
-			http.Error(w, "ข้อมูลฟอร์มไม่ถูกต้องหรือมีขนาดใหญ่เกินไป", http.StatusBadRequest)
+			http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธเธซเธฃเธทเธญเธกเธตเธเธเธฒเธ”เนเธซเธเนเน€เธเธดเธเนเธ", http.StatusBadRequest)
 
 			return
 
@@ -2623,7 +2622,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil || dormID <= 0 {
 
-		http.Error(w, "กรุณาระบุรหัสหอพักให้ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธเธฃเธธเธ“เธฒเธฃเธฐเธเธธเธฃเธซเธฑเธชเธซเธญเธเธฑเธเนเธซเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 
 		return
 
@@ -2640,7 +2639,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err == sql.ErrNoRows {
 
-		http.Error(w, "ไม่พบหอพัก หรือคุณไม่มีสิทธิ์จัดการหอพักนี้", http.StatusForbidden)
+		http.Error(w, "เนเธกเนเธเธเธซเธญเธเธฑเธ เธซเธฃเธทเธญเธเธธเธ“เนเธกเนเธกเธตเธชเธดเธ—เธเธดเนเธเธฑเธ”เธเธฒเธฃเธซเธญเธเธฑเธเธเธตเน", http.StatusForbidden)
 
 		return
 
@@ -2650,7 +2649,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room Add Dorm Query Error:", err)
 
-		http.Error(w, "ไม่สามารถอ่านข้อมูลหอพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -2664,7 +2663,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Room Add CSRF Error:", err)
 
-			http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+			http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 			return
 
@@ -2678,7 +2677,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Room Add Session Error:", err)
 
-			http.Error(w, "ไม่สามารถบันทึก Session ได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน", http.StatusInternalServerError)
 
 			return
 
@@ -2696,7 +2695,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if !ok || savedToken == "" || subtle.ConstantTimeCompare([]byte(savedToken), []byte(submittedToken)) != 1 {
 
-		http.Error(w, "403 Forbidden: CSRF Token ไม่ถูกต้อง กรุณาเปิดฟอร์มใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF Token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธเธญเธฃเนเธกเนเธซเธกเน", http.StatusForbidden)
 
 		return
 
@@ -2720,7 +2719,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if roomNumber == "" || utf8.RuneCountInString(roomNumber) > 20 {
 
-		showError("กรุณากรอกเลขห้องไม่เกิน 20 ตัวอักษร")
+		showError("เธเธฃเธธเธ“เธฒเธเธฃเธญเธเน€เธฅเธเธซเนเธญเธเนเธกเนเน€เธเธดเธ 20 เธ•เธฑเธงเธญเธฑเธเธฉเธฃ")
 
 		return
 
@@ -2728,7 +2727,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if roomType != "air" && roomType != "fan" {
 
-		showError("กรุณาเลือกประเภทห้องให้ถูกต้อง")
+		showError("เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธเธฃเธฐเน€เธ เธ—เธซเนเธญเธเนเธซเนเธ–เธนเธเธ•เนเธญเธ")
 
 		return
 
@@ -2736,7 +2735,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if status != "available" && status != "occupied" && status != "maintenance" {
 
-		showError("กรุณาเลือกสถานะห้องให้ถูกต้อง")
+		showError("เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธชเธ–เธฒเธเธฐเธซเนเธญเธเนเธซเนเธ–เธนเธเธ•เนเธญเธ")
 
 		return
 
@@ -2748,7 +2747,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		price <= 0 || price > 99999999.99 || math.Abs(price*100-math.Round(price*100)) > 0.00001 {
 
-		showError("กรุณากรอกราคาให้ถูกต้อง (มากกว่า 0 และทศนิยมไม่เกิน 2 ตำแหน่ง)")
+		showError("เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธฃเธฒเธเธฒเนเธซเนเธ–เธนเธเธ•เนเธญเธ (เธกเธฒเธเธเธงเนเธฒ 0 เนเธฅเธฐเธ—เธจเธเธดเธขเธกเนเธกเนเน€เธเธดเธ 2 เธ•เธณเนเธซเธเนเธ)")
 
 		return
 
@@ -2756,7 +2755,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if utf8.RuneCountInString(description) > 5000 {
 
-		showError("รายละเอียดห้องยาวเกินกำหนด")
+		showError("เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธซเนเธญเธเธขเธฒเธงเน€เธเธดเธเธเธณเธซเธเธ”")
 
 		return
 
@@ -2775,7 +2774,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room Add Duplicate Query Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 		return
 
@@ -2783,7 +2782,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if existingCount > 0 {
 
-		showError("เลขห้องนี้มีอยู่ในหอพักแล้ว")
+		showError("เน€เธฅเธเธซเนเธญเธเธเธตเนเธกเธตเธญเธขเธนเนเนเธเธซเธญเธเธฑเธเนเธฅเนเธง")
 
 		return
 
@@ -2807,7 +2806,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room Add Insert Error:", err)
 
-		showError("บันทึกห้องพักไม่สำเร็จ หรือเลขห้องซ้ำ กรุณาลองอีกครั้ง")
+		showError("เธเธฑเธเธ—เธถเธเธซเนเธญเธเธเธฑเธเนเธกเนเธชเธณเน€เธฃเนเธ เธซเธฃเธทเธญเน€เธฅเธเธซเนเธญเธเธเนเธณ เธเธฃเธธเธ“เธฒเธฅเธญเธเธญเธตเธเธเธฃเธฑเนเธ")
 
 		return
 
@@ -2817,7 +2816,7 @@ func landlordRoomAddHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil || affected != 1 {
 
-		http.Error(w, "ไม่มีสิทธิ์เพิ่มห้องพักในหอนี้", http.StatusForbidden)
+		http.Error(w, "เนเธกเนเธกเธตเธชเธดเธ—เธเธดเนเน€เธเธดเนเธกเธซเนเธญเธเธเธฑเธเนเธเธซเธญเธเธตเน", http.StatusForbidden)
 
 		return
 
@@ -2845,7 +2844,7 @@ func renderLandlordRoomAdd(w http.ResponseWriter, dormID int, dormName, csrfToke
 
 		log.Println("Room Add Template Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดหน้าเพิ่มห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเน€เธเธดเนเธกเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -2882,7 +2881,7 @@ func renderLandlordRoomAdd(w http.ResponseWriter, dormID int, dormName, csrfToke
 
 func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
-	// ตรวจสอบ URL
+	// เธ•เธฃเธงเธเธชเธญเธ URL
 
 	if r.URL.Path != "/landlord/rooms" {
 
@@ -2973,7 +2972,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room List User Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 
 		return
 
@@ -2985,7 +2984,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 			w,
 
-			"403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น",
+			"403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ",
 
 			http.StatusForbidden,
 		)
@@ -3004,7 +3003,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil || dormID <= 0 {
 
-		http.Error(w, "รหัสหอพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเธญเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 
 		return
 
@@ -3049,7 +3048,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Dorm Ownership Error:", err)
 
-		http.Error(w, "ไม่สามารถตรวจสอบหอพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -3145,7 +3144,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room List Query Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -3174,7 +3173,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 			log.Println("Room Scan Error:", err)
 
-			http.Error(w, "ไม่สามารถอ่านข้อมูลห้องพักได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 			return
 
@@ -3190,7 +3189,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room Rows Error:", err)
 
-		http.Error(w, "เกิดข้อผิดพลาดในการอ่านห้องพัก", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธญเนเธฒเธเธซเนเธญเธเธเธฑเธ", http.StatusInternalServerError)
 
 		return
 
@@ -3204,19 +3203,19 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 	csrfBytes := make([]byte, 32)
 	if _, err := rand.Read(csrfBytes); err != nil {
 		log.Println("Room List CSRF Generate Error:", err)
-		http.Error(w, "ไม่สามารถสร้างแบบฟอร์มได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเนเธเธเธเธญเธฃเนเธกเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	data.CSRFToken = hex.EncodeToString(csrfBytes)
 	session.Values["landlord_room_delete_csrf"] = data.CSRFToken
 	if err := session.Save(r, w); err != nil {
 		log.Println("Room List CSRF Save Error:", err)
-		http.Error(w, "ไม่สามารถบันทึก Session ได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	data.Deleted = r.URL.Query().Get("deleted") == "1"
 	if r.URL.Query().Get("delete_error") == "has_requests" {
-		data.DeleteError = "ไม่สามารถลบห้องนี้ได้ เพราะมีประวัติคำขอเช่าอยู่"
+		data.DeleteError = "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธฅเธเธซเนเธญเธเธเธตเนเนเธ”เน เน€เธเธฃเธฒเธฐเธกเธตเธเธฃเธฐเธงเธฑเธ•เธดเธเธณเธเธญเน€เธเนเธฒเธญเธขเธนเน"
 	}
 
 	// =========================
@@ -3234,7 +3233,7 @@ func landlordRoomsHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Println("Room List Template Error:", err)
 
-		http.Error(w, "ไม่สามารถโหลดหน้าจัดการห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเธเธฑเธ”เธเธฒเธฃเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 
 		return
 
@@ -3315,17 +3314,17 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Room Edit Role Error:", err)
-		http.Error(w, "เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเน", http.StatusInternalServerError)
 		return
 	}
 	if role != "landlord" {
-		http.Error(w, "403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 		return
 	}
 
 	roomID, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil || roomID <= 0 {
-		http.Error(w, "รหัสห้องพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเนเธญเธเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 
@@ -3347,7 +3346,7 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Room Edit Fetch Error:", err)
-		http.Error(w, "ไม่สามารถโหลดข้อมูลห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -3355,14 +3354,14 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 		tokenBytes := make([]byte, 32)
 		if _, err := rand.Read(tokenBytes); err != nil {
 			log.Println("Room Edit CSRF Generation Error:", err)
-			http.Error(w, "ไม่สามารถเปิดฟอร์มแก้ไขได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เน€เธเธดเธ”เธเธญเธฃเนเธกเนเธเนเนเธเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		csrfToken := hex.EncodeToString(tokenBytes)
 		session.Values["landlord_room_edit_csrf"] = csrfToken
 		if err := session.Save(r, w); err != nil {
 			log.Println("Room Edit CSRF Save Error:", err)
-			http.Error(w, "ไม่สามารถบันทึก Session ได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		renderLandlordRoomEdit(w, landlordRoomEditData{Room: room, CSRFToken: csrfToken})
@@ -3372,14 +3371,14 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 	// POST: limit payload size and validate the CSRF token.
 	r.Body = http.MaxBytesReader(w, r.Body, 32*1024)
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "ข้อมูลฟอร์มไม่ถูกต้องหรือมีขนาดใหญ่เกินไป", http.StatusBadRequest)
+		http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธเธซเธฃเธทเธญเธกเธตเธเธเธฒเธ”เนเธซเธเนเน€เธเธดเธเนเธ", http.StatusBadRequest)
 		return
 	}
 	savedToken, ok := session.Values["landlord_room_edit_csrf"].(string)
 	submittedToken := r.PostFormValue("csrf_token")
 	if !ok || savedToken == "" ||
 		subtle.ConstantTimeCompare([]byte(savedToken), []byte(submittedToken)) != 1 {
-		http.Error(w, "403 Forbidden: CSRF Token ไม่ถูกต้อง กรุณาเปิดฟอร์มใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF Token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธเธญเธฃเนเธกเนเธซเธกเน", http.StatusForbidden)
 		return
 	}
 
@@ -3398,25 +3397,25 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if room.RoomNumber == "" || utf8.RuneCountInString(room.RoomNumber) > 20 {
-		showError("กรุณากรอกเลขห้องไม่เกิน 20 ตัวอักษร")
+		showError("เธเธฃเธธเธ“เธฒเธเธฃเธญเธเน€เธฅเธเธซเนเธญเธเนเธกเนเน€เธเธดเธ 20 เธ•เธฑเธงเธญเธฑเธเธฉเธฃ")
 		return
 	}
 	if room.RoomType != "air" && room.RoomType != "fan" {
-		showError("กรุณาเลือกประเภทห้องให้ถูกต้อง")
+		showError("เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธเธฃเธฐเน€เธ เธ—เธซเนเธญเธเนเธซเนเธ–เธนเธเธ•เนเธญเธ")
 		return
 	}
 	if room.Status != "available" && room.Status != "occupied" && room.Status != "maintenance" {
-		showError("กรุณาเลือกสถานะห้องให้ถูกต้อง")
+		showError("เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธชเธ–เธฒเธเธฐเธซเนเธญเธเนเธซเนเธ–เธนเธเธ•เนเธญเธ")
 		return
 	}
 	if priceErr != nil || math.IsNaN(price) || math.IsInf(price, 0) ||
 		price <= 0 || price > 99999999.99 ||
 		math.Abs(price*100-math.Round(price*100)) > 0.00001 {
-		showError("กรุณากรอกราคาให้ถูกต้อง (มากกว่า 0 และทศนิยมไม่เกิน 2 ตำแหน่ง)")
+		showError("เธเธฃเธธเธ“เธฒเธเธฃเธญเธเธฃเธฒเธเธฒเนเธซเนเธ–เธนเธเธ•เนเธญเธ (เธกเธฒเธเธเธงเนเธฒ 0 เนเธฅเธฐเธ—เธจเธเธดเธขเธกเนเธกเนเน€เธเธดเธ 2 เธ•เธณเนเธซเธเนเธ)")
 		return
 	}
 	if utf8.RuneCountInString(room.Description) > 5000 {
-		showError("รายละเอียดห้องยาวเกินกำหนด")
+		showError("เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธซเนเธญเธเธขเธฒเธงเน€เธเธดเธเธเธณเธซเธเธ”")
 		return
 	}
 
@@ -3429,11 +3428,11 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
     `, room.DormID, room.RoomNumber, roomID).Scan(&duplicates)
 	if err != nil {
 		log.Println("Room Edit Duplicate Check Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบเลขห้องได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเน€เธฅเธเธซเนเธญเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if duplicates != 0 {
-		showError("เลขห้องนี้มีอยู่แล้วในหอพักเดียวกัน")
+		showError("เน€เธฅเธเธซเนเธญเธเธเธตเนเธกเธตเธญเธขเธนเนเนเธฅเนเธงเนเธเธซเธญเธเธฑเธเน€เธ”เธตเธขเธงเธเธฑเธ")
 		return
 	}
 
@@ -3448,13 +3447,13 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 		room.Description, roomID, userID)
 	if err != nil {
 		log.Println("Room Edit Update Error:", err)
-		showError("บันทึกไม่สำเร็จ อาจมีเลขห้องซ้ำ กรุณาตรวจสอบข้อมูลแล้วลองอีกครั้ง")
+		showError("เธเธฑเธเธ—เธถเธเนเธกเนเธชเธณเน€เธฃเนเธ เธญเธฒเธเธกเธตเน€เธฅเธเธซเนเธญเธเธเนเธณ เธเธฃเธธเธ“เธฒเธ•เธฃเธงเธเธชเธญเธเธเนเธญเธกเธนเธฅเนเธฅเนเธงเธฅเธญเธเธญเธตเธเธเธฃเธฑเนเธ")
 		return
 	}
 	affected, err := result.RowsAffected()
 	if err != nil {
 		log.Println("Room Edit RowsAffected Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบผลการบันทึกได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธฅเธเธฒเธฃเธเธฑเธเธ—เธถเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	// MySQL returns 0 for unchanged values; verify ownership still exists.
@@ -3467,7 +3466,7 @@ func landlordRoomEditHandler(w http.ResponseWriter, r *http.Request) {
 		`, roomID, userID).Scan(&stillOwned)
 		if err != nil {
 			log.Println("Room Edit Verify Error:", err)
-			http.Error(w, "ไม่สามารถตรวจสอบผลการบันทึกได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธฅเธเธฒเธฃเธเธฑเธเธ—เธถเธเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		if stillOwned != 1 {
@@ -3489,7 +3488,7 @@ func renderLandlordRoomEdit(w http.ResponseWriter, data landlordRoomEditData) {
 	tmpl, err := template.ParseFiles("templates/landlord_room_edit.html")
 	if err != nil {
 		log.Println("Room Edit Template Error:", err)
-		http.Error(w, "ไม่สามารถโหลดหน้าแก้ไขห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเนเธเนเนเธเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if err := tmpl.Execute(w, data); err != nil {
@@ -3540,30 +3539,30 @@ func landlordRoomDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Room Delete Role Error:", err)
-		http.Error(w, "เกิดข้อผิดพลาดของระบบ", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เธเธญเธเธฃเธฐเธเธ", http.StatusInternalServerError)
 		return
 	}
 	if role != "landlord" {
-		http.Error(w, "403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 		return
 	}
 
 	r.Body = http.MaxBytesReader(w, r.Body, 32*1024)
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "ข้อมูลฟอร์มไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 
 	csrf, ok := session.Values["landlord_room_delete_csrf"].(string)
 	provided := r.PostFormValue("csrf_token")
 	if !ok || csrf == "" || subtle.ConstantTimeCompare([]byte(csrf), []byte(provided)) != 1 {
-		http.Error(w, "403 Forbidden: CSRF Token ไม่ถูกต้อง กรุณาเปิดรายการห้องพักใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF Token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธฃเธฒเธขเธเธฒเธฃเธซเนเธญเธเธเธฑเธเนเธซเธกเน", http.StatusForbidden)
 		return
 	}
 
 	roomID, err := strconv.Atoi(r.PostFormValue("room_id"))
 	if err != nil || roomID <= 0 {
-		http.Error(w, "รหัสห้องพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเนเธญเธเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 
@@ -3572,7 +3571,7 @@ func landlordRoomDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	tx, err := db.BeginTx(r.Context(), nil)
 	if err != nil {
 		log.Println("Room Delete BeginTx Error:", err)
-		http.Error(w, "ไม่สามารถเริ่มลบห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เน€เธฃเธดเนเธกเธฅเธเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	defer tx.Rollback()
@@ -3591,7 +3590,7 @@ func landlordRoomDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Room Delete Ownership Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบสิทธิ์ห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเนเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -3601,7 +3600,7 @@ func landlordRoomDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	).Scan(&requestCount)
 	if err != nil {
 		log.Println("Room Delete Request Check Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบประวัติคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธฃเธฐเธงเธฑเธ•เธดเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if requestCount > 0 {
@@ -3615,18 +3614,18 @@ func landlordRoomDeleteHandler(w http.ResponseWriter, r *http.Request) {
 		"DELETE FROM rooms WHERE id = ? AND dormitory_id = ?", roomID, dormID)
 	if err != nil {
 		log.Println("Room Delete SQL Error:", err)
-		http.Error(w, "ลบห้องพักไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธฅเธเธซเนเธญเธเธเธฑเธเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	count, err := result.RowsAffected()
 	if err != nil || count != 1 {
 		log.Println("Room Delete RowsAffected Error:", err, "rows:", count)
-		http.Error(w, "ไม่สามารถยืนยันการลบห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธขเธทเธเธขเธฑเธเธเธฒเธฃเธฅเธเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if err := tx.Commit(); err != nil {
 		log.Println("Room Delete Commit Error:", err)
-		http.Error(w, "ไม่สามารถบันทึกการลบห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธเธเธฒเธฃเธฅเธเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -3692,7 +3691,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 
 	dormID, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil || dormID <= 0 {
-		http.Error(w, "รหัสหอพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเธญเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 
@@ -3711,7 +3710,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Dorm Detail Query Error:", err)
-		http.Error(w, "ไม่สามารถโหลดข้อมูลหอพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -3725,7 +3724,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
     `, dormID)
 	if err != nil {
 		log.Println("Dorm Detail Rooms Error:", err)
-		http.Error(w, "ไม่สามารถโหลดห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	for rows.Next() {
@@ -3734,7 +3733,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 			&room.Price, &room.Description); err != nil {
 			rows.Close()
 			log.Println("Dorm Detail Room Scan Error:", err)
-			http.Error(w, "ไม่สามารถอ่านข้อมูลห้องพักได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		if !page.HasRooms || room.Price < page.MinPrice {
@@ -3746,7 +3745,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 	if err = rows.Err(); err != nil {
 		rows.Close()
 		log.Println("Dorm Detail Room Rows Error:", err)
-		http.Error(w, "เกิดข้อผิดพลาดในการอ่านห้องพัก", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธญเนเธฒเธเธซเนเธญเธเธเธฑเธ", http.StatusInternalServerError)
 		return
 	}
 	rows.Close()
@@ -3774,7 +3773,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
     `, dormID).Scan(&page.ReviewCount, &page.AverageRating)
 	if err != nil {
 		log.Println("Dorm Reviews Summary Error:", err)
-		http.Error(w, "ไม่สามารถโหลดคะแนนรีวิวได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเธฐเนเธเธเธฃเธตเธงเธดเธงเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	reviewRows, err := db.QueryContext(r.Context(), `
@@ -3784,7 +3783,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
     `, dormID)
 	if err != nil {
 		log.Println("Dorm Reviews Query Error:", err)
-		http.Error(w, "ไม่สามารถโหลดรีวิวได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธฃเธตเธงเธดเธงเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	for reviewRows.Next() {
@@ -3793,7 +3792,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 		if err := reviewRows.Scan(&item.ID, &item.Name, &item.Rating, &item.Comment, &created); err != nil {
 			reviewRows.Close()
 			log.Println("Dorm Reviews Scan Error:", err)
-			http.Error(w, "อ่านรีวิวไม่สำเร็จ", http.StatusInternalServerError)
+			http.Error(w, "เธญเนเธฒเธเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 			return
 		}
 		item.CreatedAt = created.Format("02/01/2006 15:04")
@@ -3802,7 +3801,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 	if err := reviewRows.Err(); err != nil {
 		reviewRows.Close()
 		log.Println("Dorm Reviews Rows Error:", err)
-		http.Error(w, "อ่านรีวิวไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธญเนเธฒเธเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	reviewRows.Close()
@@ -3820,7 +3819,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 			page.CSRFToken, err = step12CSRFToken(w, r, session)
 			if err != nil {
 				log.Println("Dorm Detail CSRF Error:", err)
-				http.Error(w, "ไม่สามารถเปิดแบบฟอร์มได้", http.StatusInternalServerError)
+				http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เน€เธเธดเธ”เนเธเธเธเธญเธฃเนเธกเนเธ”เน", http.StatusInternalServerError)
 				return
 			}
 			var favoriteCount int
@@ -3828,7 +3827,7 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
 				"SELECT COUNT(*) FROM favorites WHERE user_id = ? AND dormitory_id = ?",
 				currentUserID, dormID).Scan(&favoriteCount); err != nil {
 				log.Println("Dorm Favorite Status Error:", err)
-				http.Error(w, "ไม่สามารถโหลดรายการโปรดได้", http.StatusInternalServerError)
+				http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธ”เน", http.StatusInternalServerError)
 				return
 			}
 			page.IsFavorite = favoriteCount > 0
@@ -3839,25 +3838,25 @@ func dormDetailHandler(w http.ResponseWriter, r *http.Request) {
             `, currentUserID, dormID).Scan(&page.MyRating, &page.MyComment)
 			if err != nil && err != sql.ErrNoRows {
 				log.Println("Dorm My Review Error:", err)
-				http.Error(w, "ไม่สามารถโหลดรีวิวของคุณได้", http.StatusInternalServerError)
+				http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธฃเธตเธงเธดเธงเธเธญเธเธเธธเธ“เนเธ”เน", http.StatusInternalServerError)
 				return
 			}
 			page.HasMyReview = err == nil
 		}
 	}
 	if r.URL.Query().Get("review") == "saved" {
-		page.Notice = "บันทึกรีวิวสำเร็จแล้ว"
+		page.Notice = "เธเธฑเธเธ—เธถเธเธฃเธตเธงเธดเธงเธชเธณเน€เธฃเนเธเนเธฅเนเธง"
 	}
 	if r.URL.Query().Get("favorite") == "add" {
-		page.Notice = "เพิ่มหอพักในรายการโปรดแล้ว"
+		page.Notice = "เน€เธเธดเนเธกเธซเธญเธเธฑเธเนเธเธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธฅเนเธง"
 	} else if r.URL.Query().Get("favorite") == "remove" {
-		page.Notice = "นำหอพักออกจากรายการโปรดแล้ว"
+		page.Notice = "เธเธณเธซเธญเธเธฑเธเธญเธญเธเธเธฒเธเธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธฅเนเธง"
 	}
 
 	tmpl, err := template.ParseFiles("templates/dorm_detail.html")
 	if err != nil {
 		log.Println("Dorm Detail Template Error:", err)
-		http.Error(w, "ไม่สามารถโหลดหน้ารายละเอียดหอพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if err := tmpl.Execute(w, page); err != nil {
@@ -3892,7 +3891,7 @@ func renderRentalRequest(w http.ResponseWriter, page RentalRequestPageData) {
 	tmpl, err := template.ParseFiles("templates/rental_request.html")
 	if err != nil {
 		log.Println("Rental Request Template Error:", err)
-		http.Error(w, "ไม่สามารถโหลดแบบฟอร์มคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เนเธเธเธเธญเธฃเนเธกเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if err := tmpl.Execute(w, page); err != nil {
@@ -3940,17 +3939,17 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Rental Request User Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบข้อมูลผู้ใช้ได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเนเธญเธกเธนเธฅเธเธนเนเนเธเนเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if userRole != "user" {
-		http.Error(w, "เฉพาะบัญชีผู้เช่าเท่านั้นที่ส่งคำขอเช่าได้", http.StatusForbidden)
+		http.Error(w, "เน€เธเธเธฒเธฐเธเธฑเธเธเธตเธเธนเนเน€เธเนเธฒเน€เธ—เนเธฒเธเธฑเนเธเธ—เธตเนเธชเนเธเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusForbidden)
 		return
 	}
 
 	roomID, err := strconv.Atoi(r.URL.Query().Get("room_id"))
 	if err != nil || roomID <= 0 {
-		http.Error(w, "รหัสห้องพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเนเธญเธเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 
@@ -3975,7 +3974,7 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Rental Request Room Error:", err)
-		http.Error(w, "ไม่สามารถโหลดข้อมูลห้องพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธซเนเธญเธเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -3987,20 +3986,20 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
         `, userID, roomID).Scan(&pendingCount)
 		if err != nil {
 			log.Println("Rental Request Pending Check Error:", err)
-			http.Error(w, "ไม่สามารถตรวจสอบคำขอเช่าได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		page.HasPending = pendingCount > 0
 		page.Success = page.HasPending && r.URL.Query().Get("sent") == "1"
 		if status != "available" && !page.HasPending {
-			http.Error(w, "ห้องพักนี้ยังไม่เปิดรับคำขอเช่า", http.StatusConflict)
+			http.Error(w, "เธซเนเธญเธเธเธฑเธเธเธตเนเธขเธฑเธเนเธกเนเน€เธเธดเธ”เธฃเธฑเธเธเธณเธเธญเน€เธเนเธฒ", http.StatusConflict)
 			return
 		}
 		if !page.HasPending {
 			tokenBytes := make([]byte, 32)
 			if _, err := rand.Read(tokenBytes); err != nil {
 				log.Println("Rental Request CSRF Error:", err)
-				http.Error(w, "เกิดข้อผิดพลาดในการสร้างฟอร์ม", http.StatusInternalServerError)
+				http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธชเธฃเนเธฒเธเธเธญเธฃเนเธก", http.StatusInternalServerError)
 				return
 			}
 			page.CSRFToken = hex.EncodeToString(tokenBytes)
@@ -4008,7 +4007,7 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 			session.Values["rental_request_csrf_room"] = roomID
 			if err := session.Save(r, w); err != nil {
 				log.Println("Rental Request Session Save Error:", err)
-				http.Error(w, "ไม่สามารถบันทึก Session ได้", http.StatusInternalServerError)
+				http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน", http.StatusInternalServerError)
 				return
 			}
 		}
@@ -4019,7 +4018,7 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	// POST: enforce a small request body and validate CSRF token.
 	r.Body = http.MaxBytesReader(w, r.Body, 32*1024)
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "ข้อมูลฟอร์มไม่ถูกต้องหรือมีขนาดใหญ่เกินไป", http.StatusBadRequest)
+		http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธเธซเธฃเธทเธญเธกเธตเธเธเธฒเธ”เนเธซเธเนเน€เธเธดเธเนเธ", http.StatusBadRequest)
 		return
 	}
 	savedToken, tokenOK := session.Values["rental_request_csrf"].(string)
@@ -4027,7 +4026,7 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	providedToken := r.PostFormValue("csrf_token")
 	if !tokenOK || !roomOK || tokenRoomID != roomID || savedToken == "" ||
 		subtle.ConstantTimeCompare([]byte(savedToken), []byte(providedToken)) != 1 {
-		http.Error(w, "403 Forbidden: กรุณาเปิดฟอร์มคำขอเช่าใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธเธญเธฃเนเธกเธเธณเธเธญเน€เธเนเธฒเนเธซเธกเน", http.StatusForbidden)
 		return
 	}
 	page.CSRFToken = savedToken
@@ -4040,22 +4039,22 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(page.Phone) != 10 {
-		formError("กรุณาระบุเบอร์โทรศัพท์ 10 หลัก")
+		formError("เธเธฃเธธเธ“เธฒเธฃเธฐเธเธธเน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เน 10 เธซเธฅเธฑเธ")
 		return
 	}
 	for _, c := range page.Phone {
 		if c < '0' || c > '9' {
-			formError("เบอร์โทรศัพท์ต้องเป็นตัวเลขเท่านั้น")
+			formError("เน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เนเธ•เนเธญเธเน€เธเนเธเธ•เธฑเธงเน€เธฅเธเน€เธ—เนเธฒเธเธฑเนเธ")
 			return
 		}
 	}
 	moveIn, err := time.Parse("2006-01-02", page.MoveInDate)
 	if err != nil || moveIn.Format("2006-01-02") != page.MoveInDate || page.MoveInDate < page.Today {
-		formError("กรุณาเลือกวันที่ย้ายเข้าตั้งแต่วันนี้เป็นต้นไป")
+		formError("เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธงเธฑเธเธ—เธตเนเธขเนเธฒเธขเน€เธเนเธฒเธ•เธฑเนเธเนเธ•เนเธงเธฑเธเธเธตเนเน€เธเนเธเธ•เนเธเนเธ")
 		return
 	}
 	if utf8.RuneCountInString(page.Message) > 2000 {
-		formError("ข้อความถึงเจ้าของหอต้องไม่เกิน 2,000 ตัวอักษร")
+		formError("เธเนเธญเธเธงเธฒเธกเธ–เธถเธเน€เธเนเธฒเธเธญเธเธซเธญเธ•เนเธญเธเนเธกเนเน€เธเธดเธ 2,000 เธ•เธฑเธงเธญเธฑเธเธฉเธฃ")
 		return
 	}
 
@@ -4063,7 +4062,7 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	tx, err := db.BeginTx(r.Context(), nil)
 	if err != nil {
 		log.Println("Rental Request BeginTx Error:", err)
-		http.Error(w, "ไม่สามารถเริ่มบันทึกคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เน€เธฃเธดเนเธกเธเธฑเธเธ—เธถเธเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	defer tx.Rollback()
@@ -4077,11 +4076,11 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Rental Request Lock Room Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบสถานะห้องได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธชเธ–เธฒเธเธฐเธซเนเธญเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if actualStatus != "available" {
-		formError("ห้องนี้ไม่ว่างแล้ว กรุณาเลือกห้องอื่น")
+		formError("เธซเนเธญเธเธเธตเนเนเธกเนเธงเนเธฒเธเนเธฅเนเธง เธเธฃเธธเธ“เธฒเน€เธฅเธทเธญเธเธซเนเธญเธเธญเธทเนเธ")
 		return
 	}
 
@@ -4092,7 +4091,7 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
     `, userID, roomID).Scan(&existing)
 	if err != nil {
 		log.Println("Rental Request Duplicate Check Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบคำขอเช่าซ้ำได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธณเธเธญเน€เธเนเธฒเธเนเธณเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if existing > 0 {
@@ -4107,12 +4106,12 @@ func rentalRequestHandler(w http.ResponseWriter, r *http.Request) {
     `, userID, roomID, page.Phone, page.MoveInDate, page.Message)
 	if err != nil {
 		log.Println("Rental Request Insert Error:", err)
-		formError("บันทึกคำขอเช่าไม่สำเร็จ กรุณาลองใหม่")
+		formError("เธเธฑเธเธ—เธถเธเธเธณเธเธญเน€เธเนเธฒเนเธกเนเธชเธณเน€เธฃเนเธ เธเธฃเธธเธ“เธฒเธฅเธญเธเนเธซเธกเน")
 		return
 	}
 	if err := tx.Commit(); err != nil {
 		log.Println("Rental Request Commit Error:", err)
-		http.Error(w, "ไม่สามารถยืนยันการบันทึกคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธขเธทเธเธขเธฑเธเธเธฒเธฃเธเธฑเธเธ—เธถเธเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -4187,11 +4186,11 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Landlord Requests Auth Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบบัญชีได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธฑเธเธเธตเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if role != "landlord" {
-		http.Error(w, "403 Forbidden: เฉพาะเจ้าของหอพักเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เน€เธเธเธฒเธฐเน€เธเนเธฒเธเธญเธเธซเธญเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 		return
 	}
 
@@ -4211,7 +4210,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
         `, ownerID)
 		if err != nil {
 			log.Println("Landlord Requests Query Error:", err)
-			http.Error(w, "ไม่สามารถโหลดรายการคำขอเช่าได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธฃเธฒเธขเธเธฒเธฃเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		page := LandlordRequestsPageData{
@@ -4227,7 +4226,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 				&item.Status, &createdAt); err != nil {
 				rows.Close()
 				log.Println("Landlord Requests Scan Error:", err)
-				http.Error(w, "ไม่สามารถอ่านคำขอเช่าได้", http.StatusInternalServerError)
+				http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 				return
 			}
 			item.MoveInDate = moveIn.Format("02/01/2006")
@@ -4240,7 +4239,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 		if err := rows.Err(); err != nil {
 			rows.Close()
 			log.Println("Landlord Requests Rows Error:", err)
-			http.Error(w, "ไม่สามารถอ่านรายการคำขอเช่าได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธฃเธฒเธขเธเธฒเธฃเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		rows.Close()
@@ -4249,20 +4248,20 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 		tokenBytes := make([]byte, 32)
 		if _, err := rand.Read(tokenBytes); err != nil {
 			log.Println("Landlord Requests CSRF Error:", err)
-			http.Error(w, "ไม่สามารถสร้างฟอร์มได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเธเธญเธฃเนเธกเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		page.CSRFToken = hex.EncodeToString(tokenBytes)
 		session.Values["landlord_requests_csrf"] = page.CSRFToken
 		if err := session.Save(r, w); err != nil {
 			log.Println("Landlord Requests Save Session Error:", err)
-			http.Error(w, "ไม่สามารถบันทึก Session ได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธ Session เนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		tmpl, err := template.ParseFiles("templates/landlord_requests.html")
 		if err != nil {
 			log.Println("Landlord Requests Template Error:", err)
-			http.Error(w, "ไม่สามารถโหลดหน้ารีวิวคำขอเช่าได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเธฃเธตเธงเธดเธงเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		if err := tmpl.Execute(w, page); err != nil {
@@ -4273,7 +4272,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 
 	r.Body = http.MaxBytesReader(w, r.Body, 32*1024)
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "ข้อมูลฟอร์มไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 	savedToken, ok := session.Values["landlord_requests_csrf"].(string)
@@ -4281,17 +4280,17 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	if !ok || savedToken == "" || subtle.ConstantTimeCompare(
 		[]byte(savedToken), []byte(submittedToken),
 	) != 1 {
-		http.Error(w, "403 Forbidden: กรุณาเปิดหน้าคำขอเช่าใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธซเธเนเธฒเธเธณเธเธญเน€เธเนเธฒเนเธซเธกเน", http.StatusForbidden)
 		return
 	}
 	requestID, err := strconv.Atoi(r.PostFormValue("request_id"))
 	if err != nil || requestID <= 0 {
-		http.Error(w, "รหัสคำขอเช่าไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธเธณเธเธญเน€เธเนเธฒเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 	action := r.PostFormValue("action")
 	if action != "approve" && action != "reject" {
-		http.Error(w, "คำสั่งไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธเธณเธชเธฑเนเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 
@@ -4307,14 +4306,14 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Landlord Requests Lookup Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
 	tx, err := db.BeginTx(r.Context(), nil)
 	if err != nil {
 		log.Println("Landlord Requests BeginTx Error:", err)
-		http.Error(w, "ไม่สามารถเริ่มบันทึกคำขอได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เน€เธฃเธดเนเธกเธเธฑเธเธ—เธถเธเธเธณเธเธญเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	defer tx.Rollback()
@@ -4333,7 +4332,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Landlord Requests Ownership Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบสิทธิ์ได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเนเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
@@ -4348,7 +4347,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Landlord Requests Lock Request Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบสถานะคำขอได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธชเธ–เธฒเธเธฐเธเธณเธเธญเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if lockedRoomID != roomID || requestStatus != "pending" {
@@ -4365,14 +4364,14 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 			"UPDATE rental_requests SET status = 'approved' WHERE id = ? AND status = 'pending'", requestID,
 		); err != nil {
 			log.Println("Landlord Requests Approve Error:", err)
-			http.Error(w, "อนุมัติคำขอไม่สำเร็จ", http.StatusInternalServerError)
+			http.Error(w, "เธญเธเธธเธกเธฑเธ•เธดเธเธณเธเธญเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 			return
 		}
 		if _, err = tx.ExecContext(r.Context(),
 			"UPDATE rooms SET status = 'occupied' WHERE id = ? AND status = 'available'", roomID,
 		); err != nil {
 			log.Println("Landlord Requests Occupy Room Error:", err)
-			http.Error(w, "ไม่สามารถเปลี่ยนสถานะห้องได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เน€เธเธฅเธตเนเธขเธเธชเธ–เธฒเธเธฐเธซเนเธญเธเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		// Other pending requests for the same room cannot be fulfilled.
@@ -4381,7 +4380,7 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
             WHERE room_id = ? AND id <> ? AND status = 'pending'
         `, roomID, requestID); err != nil {
 			log.Println("Landlord Requests Reject Others Error:", err)
-			http.Error(w, "ไม่สามารถปิดคำขออื่นได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธดเธ”เธเธณเธเธญเธญเธทเนเธเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 	} else {
@@ -4389,13 +4388,13 @@ func landlordRequestsHandler(w http.ResponseWriter, r *http.Request) {
 			"UPDATE rental_requests SET status = 'rejected' WHERE id = ? AND status = 'pending'", requestID,
 		); err != nil {
 			log.Println("Landlord Requests Reject Error:", err)
-			http.Error(w, "ปฏิเสธคำขอไม่สำเร็จ", http.StatusInternalServerError)
+			http.Error(w, "เธเธเธดเน€เธชเธเธเธณเธเธญเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 			return
 		}
 	}
 	if err := tx.Commit(); err != nil {
 		log.Println("Landlord Requests Commit Error:", err)
-		http.Error(w, "ไม่สามารถยืนยันการเปลี่ยนแปลงได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธขเธทเธเธขเธฑเธเธเธฒเธฃเน€เธเธฅเธตเนเธขเธเนเธเธฅเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	delete(session.Values, "landlord_requests_csrf")
@@ -4477,11 +4476,11 @@ func myRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("My Requests User Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบข้อมูลผู้ใช้ได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเนเธญเธกเธนเธฅเธเธนเนเนเธเนเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if role != "user" {
-		http.Error(w, "403 Forbidden: หน้านี้สำหรับผู้เช่าห้องพักเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เธซเธเนเธฒเธเธตเนเธชเธณเธซเธฃเธฑเธเธเธนเนเน€เธเนเธฒเธซเนเธญเธเธเธฑเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 		return
 	}
 
@@ -4503,7 +4502,7 @@ func myRequestsHandler(w http.ResponseWriter, r *http.Request) {
     `, userID)
 	if err != nil {
 		log.Println("My Requests Query Error:", err)
-		http.Error(w, "ไม่สามารถโหลดคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
@@ -4517,7 +4516,7 @@ func myRequestsHandler(w http.ResponseWriter, r *http.Request) {
 			&item.Status, &createdAt)
 		if err != nil {
 			log.Println("My Requests Scan Error:", err)
-			http.Error(w, "ไม่สามารถอ่านข้อมูลคำขอเช่าได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		item.MoveInDate = moveInDate.Format("02/01/2006")
@@ -4534,14 +4533,14 @@ func myRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := rows.Err(); err != nil {
 		log.Println("My Requests Rows Error:", err)
-		http.Error(w, "ไม่สามารถโหลดคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 
 	tmpl, err := template.ParseFiles("templates/my_requests.html")
 	if err != nil {
 		log.Println("My Requests Template Error:", err)
-		http.Error(w, "ไม่สามารถโหลดหน้าคำขอเช่าได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธซเธเนเธฒเธเธณเธเธญเน€เธเนเธฒเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if err := tmpl.Execute(w, page); err != nil {
@@ -4617,11 +4616,11 @@ func step12Tenant(w http.ResponseWriter, r *http.Request) (int, string, *session
 	}
 	if err != nil {
 		log.Println("Step 12 User Lookup Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบบัญชีผู้ใช้ได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธเธฑเธเธเธตเธเธนเนเนเธเนเนเธ”เน", http.StatusInternalServerError)
 		return 0, "", nil, false
 	}
 	if role != "user" {
-		http.Error(w, "403 Forbidden: สำหรับบัญชีผู้เช่าเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เธชเธณเธซเธฃเธฑเธเธเธฑเธเธเธตเธเธนเนเน€เธเนเธฒเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 		return 0, "", nil, false
 	}
 	return userID, name, session, true
@@ -4659,7 +4658,7 @@ func step12PostForm(w http.ResponseWriter, r *http.Request) bool {
 	}
 	r.Body = http.MaxBytesReader(w, r.Body, 16*1024)
 	if err := r.ParseForm(); err != nil {
-		http.Error(w, "ข้อมูลแบบฟอร์มไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธเนเธญเธกเธนเธฅเนเธเธเธเธญเธฃเนเธกเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return false
 	}
 	return true
@@ -4680,18 +4679,18 @@ func favoriteToggleHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !step12VerifyCSRF(r, session) {
-		http.Error(w, "403 Forbidden: CSRF token ไม่ถูกต้อง กรุณาเปิดหน้าใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธซเธเนเธฒเนเธซเธกเน", http.StatusForbidden)
 		return
 	}
 	dormID, valid := step12DormID(r)
 	if !valid {
-		http.Error(w, "รหัสหอพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเธญเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 	var exists int
 	if err := db.QueryRowContext(r.Context(), "SELECT COUNT(*) FROM dormitories WHERE id = ?", dormID).Scan(&exists); err != nil {
 		log.Println("Favorite Dorm Check Error:", err)
-		http.Error(w, "ไม่สามารถตรวจสอบหอพักได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธ•เธฃเธงเธเธชเธญเธเธซเธญเธเธฑเธเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	if exists == 0 {
@@ -4708,12 +4707,12 @@ func favoriteToggleHandler(w http.ResponseWriter, r *http.Request) {
 		_, err = db.ExecContext(r.Context(),
 			"DELETE FROM favorites WHERE user_id = ? AND dormitory_id = ?", userID, dormID)
 	default:
-		http.Error(w, "คำสั่งไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธเธณเธชเธฑเนเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 	if err != nil {
 		log.Println("Favorite Change Error:", err)
-		http.Error(w, "บันทึกรายการโปรดไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธเธฑเธเธ—เธถเธเธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	if r.PostFormValue("from") == "favorites" {
@@ -4734,28 +4733,28 @@ func reviewSaveHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !step12VerifyCSRF(r, session) {
-		http.Error(w, "403 Forbidden: CSRF token ไม่ถูกต้อง กรุณาเปิดหน้าใหม่", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธซเธเนเธฒเนเธซเธกเน", http.StatusForbidden)
 		return
 	}
 	dormID, valid := step12DormID(r)
 	if !valid {
-		http.Error(w, "รหัสหอพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเธญเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 	rating, err := strconv.Atoi(r.PostFormValue("rating"))
 	if err != nil || rating < 1 || rating > 5 {
-		http.Error(w, "กรุณาให้คะแนนตั้งแต่ 1 ถึง 5 ดาว", http.StatusBadRequest)
+		http.Error(w, "เธเธฃเธธเธ“เธฒเนเธซเนเธเธฐเนเธเธเธ•เธฑเนเธเนเธ•เน 1 เธ–เธถเธ 5 เธ”เธฒเธง", http.StatusBadRequest)
 		return
 	}
 	comment := strings.TrimSpace(r.PostFormValue("comment"))
 	if utf8.RuneCountInString(comment) > 1000 {
-		http.Error(w, "รีวิวต้องไม่เกิน 1000 ตัวอักษร", http.StatusBadRequest)
+		http.Error(w, "เธฃเธตเธงเธดเธงเธ•เนเธญเธเนเธกเนเน€เธเธดเธ 1000 เธ•เธฑเธงเธญเธฑเธเธฉเธฃ", http.StatusBadRequest)
 		return
 	}
 	var exists int
 	if err := db.QueryRowContext(r.Context(), "SELECT COUNT(*) FROM dormitories WHERE id = ?", dormID).Scan(&exists); err != nil {
 		log.Println("Review Dorm Check Error:", err)
-		http.Error(w, "ตรวจสอบหอพักไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธ•เธฃเธงเธเธชเธญเธเธซเธญเธเธฑเธเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	if exists == 0 {
@@ -4769,7 +4768,7 @@ func reviewSaveHandler(w http.ResponseWriter, r *http.Request) {
     `, userID, dormID, rating, comment)
 	if err != nil {
 		log.Println("Review Save Error:", err)
-		http.Error(w, "บันทึกรีวิวไม่สำเร็จ กรุณาตรวจว่าติดตั้ง SQL ของ Step 12 แล้ว", http.StatusInternalServerError)
+		http.Error(w, "เธเธฑเธเธ—เธถเธเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ เธเธฃเธธเธ“เธฒเธ•เธฃเธงเธเธงเนเธฒเธ•เธดเธ”เธ•เธฑเนเธ SQL เธเธญเธ Step 12 เนเธฅเนเธง", http.StatusInternalServerError)
 		return
 	}
 	http.Redirect(w, r, "/dorm?id="+strconv.Itoa(dormID)+"&review=saved#reviews", http.StatusSeeOther)
@@ -4784,18 +4783,18 @@ func reviewDeleteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !step12VerifyCSRF(r, session) {
-		http.Error(w, "403 Forbidden: CSRF token ไม่ถูกต้อง", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: CSRF token เนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusForbidden)
 		return
 	}
 	dormID, valid := step12DormID(r)
 	if !valid {
-		http.Error(w, "รหัสหอพักไม่ถูกต้อง", http.StatusBadRequest)
+		http.Error(w, "เธฃเธซเธฑเธชเธซเธญเธเธฑเธเนเธกเนเธ–เธนเธเธ•เนเธญเธ", http.StatusBadRequest)
 		return
 	}
 	if _, err := db.ExecContext(r.Context(),
 		"DELETE FROM reviews WHERE user_id = ? AND dormitory_id = ?", userID, dormID); err != nil {
 		log.Println("Review Delete Error:", err)
-		http.Error(w, "ลบรีวิวไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธฅเธเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	http.Redirect(w, r, "/my-reviews?deleted=1", http.StatusSeeOther)
@@ -4818,7 +4817,7 @@ func favoritesHandler(w http.ResponseWriter, r *http.Request) {
 	token, err := step12CSRFToken(w, r, session)
 	if err != nil {
 		log.Println("Favorites CSRF Error:", err)
-		http.Error(w, "สร้างฟอร์มไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธชเธฃเนเธฒเธเธเธญเธฃเนเธกเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	page := FavoritesPageData{Name: name, CSRFToken: token, Dorms: []FavoriteDormItem{}}
@@ -4835,7 +4834,7 @@ func favoritesHandler(w http.ResponseWriter, r *http.Request) {
     `, userID)
 	if err != nil {
 		log.Println("Favorites Query Error:", err)
-		http.Error(w, "ไม่สามารถโหลดรายการโปรดได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
@@ -4844,20 +4843,20 @@ func favoritesHandler(w http.ResponseWriter, r *http.Request) {
 		if err := rows.Scan(&item.ID, &item.Name, &item.Address, &item.Image,
 			&item.AvailableRooms, &item.MinPrice); err != nil {
 			log.Println("Favorites Scan Error:", err)
-			http.Error(w, "ไม่สามารถอ่านรายการโปรดได้", http.StatusInternalServerError)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธ”เน", http.StatusInternalServerError)
 			return
 		}
 		page.Dorms = append(page.Dorms, item)
 	}
 	if err := rows.Err(); err != nil {
 		log.Println("Favorites Rows Error:", err)
-		http.Error(w, "ไม่สามารถอ่านรายการโปรดได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเนเธฒเธเธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	tmpl, err := template.ParseFiles("templates/favorites.html")
 	if err != nil {
 		log.Println("Favorites Template Error:", err)
-		http.Error(w, "โหลดหน้ารายการโปรดไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เนเธซเธฅเธ”เธซเธเนเธฒเธฃเธฒเธขเธเธฒเธฃเนเธเธฃเธ”เนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	if err := tmpl.Execute(w, page); err != nil {
@@ -4882,7 +4881,7 @@ func myReviewsHandler(w http.ResponseWriter, r *http.Request) {
 	token, err := step12CSRFToken(w, r, session)
 	if err != nil {
 		log.Println("My Reviews CSRF Error:", err)
-		http.Error(w, "สร้างฟอร์มไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธชเธฃเนเธฒเธเธเธญเธฃเนเธกเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	page := MyReviewsPageData{Name: name, CSRFToken: token, Reviews: []MyReviewItem{}}
@@ -4894,7 +4893,7 @@ func myReviewsHandler(w http.ResponseWriter, r *http.Request) {
     `, userID)
 	if err != nil {
 		log.Println("My Reviews Query Error:", err)
-		http.Error(w, "ไม่สามารถโหลดรีวิวได้", http.StatusInternalServerError)
+		http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เนเธซเธฅเธ”เธฃเธตเธงเธดเธงเนเธ”เน", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
@@ -4903,7 +4902,7 @@ func myReviewsHandler(w http.ResponseWriter, r *http.Request) {
 		var created time.Time
 		if err := rows.Scan(&item.DormID, &item.DormName, &item.Rating, &item.Comment, &created); err != nil {
 			log.Println("My Reviews Scan Error:", err)
-			http.Error(w, "อ่านข้อมูลรีวิวไม่สำเร็จ", http.StatusInternalServerError)
+			http.Error(w, "เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 			return
 		}
 		item.CreatedAt = created.Format("02/01/2006 15:04")
@@ -4911,13 +4910,13 @@ func myReviewsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := rows.Err(); err != nil {
 		log.Println("My Reviews Rows Error:", err)
-		http.Error(w, "อ่านข้อมูลรีวิวไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เธญเนเธฒเธเธเนเธญเธกเธนเธฅเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	tmpl, err := template.ParseFiles("templates/my_reviews.html")
 	if err != nil {
 		log.Println("My Reviews Template Error:", err)
-		http.Error(w, "โหลดหน้ารีวิวไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เนเธซเธฅเธ”เธซเธเนเธฒเธฃเธตเธงเธดเธงเนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	if err := tmpl.Execute(w, page); err != nil {
@@ -5014,11 +5013,11 @@ func adminRequire(w http.ResponseWriter, r *http.Request) (int, string, *session
 	}
 	if err != nil {
 		log.Println("Admin authorization error:", err)
-		http.Error(w, "เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์", http.StatusInternalServerError)
+		http.Error(w, "เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”เนเธเธเธฒเธฃเธ•เธฃเธงเธเธชเธญเธเธชเธดเธ—เธเธดเน", http.StatusInternalServerError)
 		return 0, "", nil, false
 	}
 	if role != "admin" {
-		http.Error(w, "403 Forbidden: สำหรับผู้ดูแลระบบเท่านั้น", http.StatusForbidden)
+		http.Error(w, "403 Forbidden: เธชเธณเธซเธฃเธฑเธเธเธนเนเธ”เธนเนเธฅเธฃเธฐเธเธเน€เธ—เนเธฒเธเธฑเนเธ", http.StatusForbidden)
 		return 0, "", nil, false
 	}
 	return id, name, session, true
@@ -5028,7 +5027,7 @@ func adminRender(w http.ResponseWriter, filename string, data any) {
 	t, err := template.ParseFiles("templates/" + filename)
 	if err != nil {
 		log.Println("Admin template parse error:", err)
-		http.Error(w, "โหลดหน้า Admin ไม่สำเร็จ", http.StatusInternalServerError)
+		http.Error(w, "เนเธซเธฅเธ”เธซเธเนเธฒ Admin เนเธกเนเธชเธณเน€เธฃเนเธ", http.StatusInternalServerError)
 		return
 	}
 	if err := t.Execute(w, data); err != nil {
@@ -5119,19 +5118,19 @@ func adminDashboardHandler(w http.ResponseWriter, r *http.Request) {
 		&data.AvailableRooms, &data.PendingRequests, &data.Reviews)
 	if err != nil {
 		log.Println("Admin dashboard stats error:", err)
-		http.Error(w, "โหลดสถิติไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธชเธ–เธดเธ•เธดเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	data.RecentDorms, err = adminReadDorms(r, 5)
 	if err != nil {
 		log.Println("Admin dorms error:", err)
-		http.Error(w, "โหลดข้อมูลหอพักไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเธซเธญเธเธฑเธเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	data.RecentRequests, err = adminReadRequests(r, 5)
 	if err != nil {
 		log.Println("Admin requests error:", err)
-		http.Error(w, "โหลดคำขอเช่าไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเธณเธเธญเน€เธเนเธฒเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	adminRender(w, "admin.html", data)
@@ -5173,23 +5172,23 @@ func adminUsersHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		r.Body = http.MaxBytesReader(w, r.Body, 16*1024)
 		if err := r.ParseForm(); err != nil {
-			http.Error(w, "ข้อมูลฟอร์มผิดพลาด", 400)
+			http.Error(w, "เธเนเธญเธกเธนเธฅเธเธญเธฃเนเธกเธเธดเธ”เธเธฅเธฒเธ”", 400)
 			return
 		}
 		expected, ok := session.Values["admin_csrf"].(string)
 		submitted := r.PostFormValue("csrf_token")
 		if !ok || expected == "" || submitted == "" || subtle.ConstantTimeCompare([]byte(expected), []byte(submitted)) != 1 {
-			http.Error(w, "403 Forbidden: CSRF Token ไม่ถูกต้อง กรุณาเปิดหน้าใหม่", 403)
+			http.Error(w, "403 Forbidden: CSRF Token เนเธกเนเธ–เธนเธเธ•เนเธญเธ เธเธฃเธธเธ“เธฒเน€เธเธดเธ”เธซเธเนเธฒเนเธซเธกเน", 403)
 			return
 		}
 		id, err := strconv.Atoi(r.PostFormValue("user_id"))
 		role := r.PostFormValue("role")
 		if err != nil || id <= 0 || (role != "user" && role != "landlord") {
-			http.Error(w, "ข้อมูลผู้ใช้หรือสิทธิ์ไม่ถูกต้อง", 400)
+			http.Error(w, "เธเนเธญเธกเธนเธฅเธเธนเนเนเธเนเธซเธฃเธทเธญเธชเธดเธ—เธเธดเนเนเธกเนเธ–เธนเธเธ•เนเธญเธ", 400)
 			return
 		}
 		if id == actorID {
-			http.Error(w, "ไม่อนุญาตให้แก้สิทธิ์ตนเอง", 403)
+			http.Error(w, "เนเธกเนเธญเธเธธเธเธฒเธ•เนเธซเนเนเธเนเธชเธดเธ—เธเธดเนเธ•เธเน€เธญเธ", 403)
 			return
 		}
 		// Conditional update: never changes admin accounts; never downgrades an owner
@@ -5201,13 +5200,13 @@ func adminUsersHandler(w http.ResponseWriter, r *http.Request) {
                    (SELECT 1 FROM dormitories d WHERE d.owner_id=u.id))`, role, id, role)
 		if err != nil {
 			log.Println("Admin role update error:", err)
-			http.Error(w, "เปลี่ยนสิทธิ์ไม่สำเร็จ", 500)
+			http.Error(w, "เน€เธเธฅเธตเนเธขเธเธชเธดเธ—เธเธดเนเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 			return
 		}
 		affected, err := result.RowsAffected()
 		if err != nil {
 			log.Println("Admin rows affected error:", err)
-			http.Error(w, "ตรวจผลการแก้ไขไม่สำเร็จ", 500)
+			http.Error(w, "เธ•เธฃเธงเธเธเธฅเธเธฒเธฃเนเธเนเนเธเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 			return
 		}
 		if affected == 0 {
@@ -5222,7 +5221,7 @@ func adminUsersHandler(w http.ResponseWriter, r *http.Request) {
 	token, err := adminCSRFToken(w, r, session)
 	if err != nil {
 		log.Println("Admin csrf error:", err)
-		http.Error(w, "สร้าง CSRF Token ไม่สำเร็จ", 500)
+		http.Error(w, "เธชเธฃเนเธฒเธ CSRF Token เนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	rows, err := db.QueryContext(r.Context(), `
@@ -5231,7 +5230,7 @@ func adminUsersHandler(w http.ResponseWriter, r *http.Request) {
         FROM users u ORDER BY u.id DESC LIMIT 200`)
 	if err != nil {
 		log.Println("Admin users query error:", err)
-		http.Error(w, "โหลดผู้ใช้ไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเธนเนเนเธเนเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	data := AdminUsersPage{Name: name, CSRFToken: token, Users: []AdminUser{}, Result: r.URL.Query().Get("result")}
@@ -5248,7 +5247,7 @@ func adminUsersHandler(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 	if err != nil {
 		log.Println("Admin users scan error:", err)
-		http.Error(w, "โหลดผู้ใช้ไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเธนเนเนเธเนเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	adminRender(w, "admin_users.html", data)
@@ -5265,7 +5264,7 @@ func adminDormsHandler(w http.ResponseWriter, r *http.Request) {
 	dorms, err := adminReadDorms(r, 200)
 	if err != nil {
 		log.Println("Admin dorms list error:", err)
-		http.Error(w, "โหลดหอพักไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธซเธญเธเธฑเธเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	adminRender(w, "admin_dorms.html", AdminDormsPage{Name: name, Dorms: dorms})
@@ -5282,7 +5281,7 @@ func adminRequestsHandler(w http.ResponseWriter, r *http.Request) {
 	requests, err := adminReadRequests(r, 200)
 	if err != nil {
 		log.Println("Admin requests list error:", err)
-		http.Error(w, "โหลดคำขอเช่าไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเธณเธเธญเน€เธเนเธฒเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	adminRender(w, "admin_requests.html", AdminRequestsPage{Name: name, Requests: requests})
@@ -5299,65 +5298,65 @@ var demoDocsDir = uploadedDocumentDir()
 func saveDemoLandlordDocument(upload multipart.File, header *multipart.FileHeader) (string, error) {
 	const max int64 = 3 << 20
 	if header == nil || header.Size < 1 || header.Size > max {
-		return "", errors.New("เอกสารทดสอบต้องมีขนาดไม่เกิน 3 MB")
+		return "", errors.New("เน€เธญเธเธชเธฒเธฃเธ—เธ”เธชเธญเธเธ•เนเธญเธเธกเธตเธเธเธฒเธ”เนเธกเนเน€เธเธดเธ 3 MB")
 	}
 	ext := strings.ToLower(filepath.Ext(header.Filename))
 	if ext != ".txt" && ext != ".pdf" && ext != ".png" && ext != ".jpg" && ext != ".jpeg" {
-		return "", errors.New("รองรับเอกสารตัวอย่าง .txt, .pdf, .png, .jpg เท่านั้น")
+		return "", errors.New("เธฃเธญเธเธฃเธฑเธเน€เธญเธเธชเธฒเธฃเธ•เธฑเธงเธญเธขเนเธฒเธ .txt, .pdf, .png, .jpg เน€เธ—เนเธฒเธเธฑเนเธ")
 	}
 	contents, err := io.ReadAll(io.LimitReader(upload, max+1))
 	if err != nil || len(contents) == 0 || len(contents) > int(max) {
-		return "", errors.New("อ่านไฟล์เอกสารไม่สำเร็จหรือไฟล์ใหญ่เกิน 3 MB")
+		return "", errors.New("เธญเนเธฒเธเนเธเธฅเนเน€เธญเธเธชเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธเธซเธฃเธทเธญเนเธเธฅเนเนเธซเธเนเน€เธเธดเธ 3 MB")
 	}
 	switch ext {
 	case ".txt":
 		if !utf8.Valid(contents) || bytes.IndexByte(contents, 0) >= 0 {
-			return "", errors.New("ไฟล์ .txt ต้องเป็นข้อความ UTF-8")
+			return "", errors.New("เนเธเธฅเน .txt เธ•เนเธญเธเน€เธเนเธเธเนเธญเธเธงเธฒเธก UTF-8")
 		}
 	case ".pdf":
 		if !bytes.HasPrefix(contents, []byte("%PDF-")) {
-			return "", errors.New("เอกสาร .pdf ไม่ถูกต้อง")
+			return "", errors.New("เน€เธญเธเธชเธฒเธฃ .pdf เนเธกเนเธ–เธนเธเธ•เนเธญเธ")
 		}
 	case ".png":
 		if _, _, err := image.DecodeConfig(bytes.NewReader(contents)); err != nil {
-			return "", errors.New("ไฟล์ภาพ PNG ไม่ถูกต้อง")
+			return "", errors.New("เนเธเธฅเนเธ เธฒเธ PNG เนเธกเนเธ–เธนเธเธ•เนเธญเธ")
 		}
 		if !bytes.HasPrefix(contents, []byte("\x89PNG\r\n\x1a\n")) {
-			return "", errors.New("รูปแบบไฟล์ PNG ไม่ถูกต้อง")
+			return "", errors.New("เธฃเธนเธเนเธเธเนเธเธฅเน PNG เนเธกเนเธ–เธนเธเธ•เนเธญเธ")
 		}
 	case ".jpg", ".jpeg":
 		if len(contents) < 3 || !bytes.Equal(contents[:3], []byte{0xff, 0xd8, 0xff}) {
-			return "", errors.New("ไฟล์ JPEG ไม่ถูกต้อง")
+			return "", errors.New("เนเธเธฅเน JPEG เนเธกเนเธ–เธนเธเธ•เนเธญเธ")
 		}
 		if _, _, err := image.DecodeConfig(bytes.NewReader(contents)); err != nil {
-			return "", errors.New("ไฟล์ JPEG ไม่ถูกต้อง")
+			return "", errors.New("เนเธเธฅเน JPEG เนเธกเนเธ–เธนเธเธ•เนเธญเธ")
 		}
 	}
 	if err := os.MkdirAll(demoDocsDir, 0700); err != nil {
-		return "", errors.New("ไม่สามารถสร้างโฟลเดอร์เอกสารได้")
+		return "", errors.New("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธชเธฃเนเธฒเธเนเธเธฅเน€เธ”เธญเธฃเนเน€เธญเธเธชเธฒเธฃเนเธ”เน")
 	}
 	f, err := os.CreateTemp(demoDocsDir, "proof-*")
 	if err != nil {
-		return "", errors.New("ไม่สามารถบันทึกเอกสารได้")
+		return "", errors.New("เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธเธฑเธเธ—เธถเธเน€เธญเธเธชเธฒเธฃเนเธ”เน")
 	}
 	name := f.Name()
 	defer func() { f.Close() }()
 	if err := f.Chmod(0600); err != nil {
 		os.Remove(name)
-		return "", errors.New("กำหนดสิทธิ์ไฟล์ไม่สำเร็จ")
+		return "", errors.New("เธเธณเธซเธเธ”เธชเธดเธ—เธเธดเนเนเธเธฅเนเนเธกเนเธชเธณเน€เธฃเนเธ")
 	}
 	if _, err := f.Write(contents); err != nil {
 		os.Remove(name)
-		return "", errors.New("เขียนไฟล์เอกสารไม่สำเร็จ")
+		return "", errors.New("เน€เธเธตเธขเธเนเธเธฅเนเน€เธญเธเธชเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธ")
 	}
 	if err := f.Close(); err != nil {
 		os.Remove(name)
-		return "", errors.New("ปิดไฟล์เอกสารไม่สำเร็จ")
+		return "", errors.New("เธเธดเธ”เนเธเธฅเนเน€เธญเธเธชเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธ")
 	}
 	target := name + ext
 	if err := os.Rename(name, target); err != nil {
 		os.Remove(name)
-		return "", errors.New("ตั้งชื่อไฟล์เอกสารไม่สำเร็จ")
+		return "", errors.New("เธ•เธฑเนเธเธเธทเนเธญเนเธเธฅเนเน€เธญเธเธชเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธ")
 	}
 	return target, nil
 }
@@ -5396,7 +5395,7 @@ func landlordApplicationStatusHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if err != nil {
 		log.Println("Landlord status error:", err)
-		http.Error(w, "โหลดสถานะไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธชเธ–เธฒเธเธฐเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	page.Name = name
@@ -5431,25 +5430,25 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		r.Body = http.MaxBytesReader(w, r.Body, 16<<10)
 		if err := r.ParseForm(); err != nil {
-			http.Error(w, "ข้อมูลไม่ถูกต้อง", 400)
+			http.Error(w, "เธเนเธญเธกเธนเธฅเนเธกเนเธ–เธนเธเธ•เนเธญเธ", 400)
 			return
 		}
 		token, ok := session.Values["admin_csrf"].(string)
 		posted := r.PostFormValue("csrf_token")
 		if !ok || token == "" || posted == "" || subtle.ConstantTimeCompare([]byte(token), []byte(posted)) != 1 {
-			http.Error(w, "CSRF Token ไม่ถูกต้อง", 403)
+			http.Error(w, "CSRF Token เนเธกเนเธ–เธนเธเธ•เนเธญเธ", 403)
 			return
 		}
 		appID, err := strconv.Atoi(r.PostFormValue("application_id"))
 		decision := r.PostFormValue("decision")
 		note := strings.TrimSpace(r.PostFormValue("review_note"))
 		if err != nil || appID <= 0 || (decision != "approved" && decision != "rejected") || len([]rune(note)) > 255 {
-			http.Error(w, "ข้อมูลการอนุมัติไม่ถูกต้อง", 400)
+			http.Error(w, "เธเนเธญเธกเธนเธฅเธเธฒเธฃเธญเธเธธเธกเธฑเธ•เธดเนเธกเนเธ–เธนเธเธ•เนเธญเธ", 400)
 			return
 		}
 		tx, err := db.BeginTx(r.Context(), nil)
 		if err != nil {
-			http.Error(w, "เปิดรายการไม่สำเร็จ", 500)
+			http.Error(w, "เน€เธเธดเธ”เธฃเธฒเธขเธเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 			return
 		}
 		defer tx.Rollback()
@@ -5457,11 +5456,11 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
 		var status string
 		err = tx.QueryRowContext(r.Context(), "SELECT user_id,status FROM landlord_applications WHERE id=? FOR UPDATE", appID).Scan(&targetID, &status)
 		if err == sql.ErrNoRows {
-			http.Error(w, "ไม่พบคำขอ", 404)
+			http.Error(w, "เนเธกเนเธเธเธเธณเธเธญ", 404)
 			return
 		}
 		if err != nil {
-			http.Error(w, "ตรวจคำขอไม่สำเร็จ", 500)
+			http.Error(w, "เธ•เธฃเธงเธเธเธณเธเธญเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 			return
 		}
 		if status != "pending" {
@@ -5469,19 +5468,19 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if targetID == actorID {
-			http.Error(w, "ไม่สามารถอนุมัติคำขอของตนเอง", 403)
+			http.Error(w, "เนเธกเนเธชเธฒเธกเธฒเธฃเธ–เธญเธเธธเธกเธฑเธ•เธดเธเธณเธเธญเธเธญเธเธ•เธเน€เธญเธ", 403)
 			return
 		}
 		if decision == "approved" {
 			result, err := tx.ExecContext(r.Context(), "UPDATE users SET role='landlord' WHERE id=? AND role='user'", targetID)
 			if err != nil {
 				log.Println("Landlord approval user update error:", err)
-				http.Error(w, "เปลี่ยนสิทธิ์ไม่สำเร็จ", 500)
+				http.Error(w, "เน€เธเธฅเธตเนเธขเธเธชเธดเธ—เธเธดเนเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 				return
 			}
 			affected, err := result.RowsAffected()
 			if err != nil || affected != 1 {
-				http.Error(w, "บัญชีไม่อยู่ในสถานะ user จึงอนุมัติไม่ได้", 409)
+				http.Error(w, "เธเธฑเธเธเธตเนเธกเนเธญเธขเธนเนเนเธเธชเธ–เธฒเธเธฐ user เธเธถเธเธญเธเธธเธกเธฑเธ•เธดเนเธกเนเนเธ”เน", 409)
 				return
 			}
 		}
@@ -5490,11 +5489,11 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
            WHERE id=? AND status='pending'`, decision, note, actorID, appID)
 		if err != nil {
 			log.Println("Admin landlord application update:", err)
-			http.Error(w, "บันทึกผลการตรวจไม่สำเร็จ", 500)
+			http.Error(w, "เธเธฑเธเธ—เธถเธเธเธฅเธเธฒเธฃเธ•เธฃเธงเธเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 			return
 		}
 		if err := tx.Commit(); err != nil {
-			http.Error(w, "บันทึกผลตรวจไม่สำเร็จ", 500)
+			http.Error(w, "เธเธฑเธเธ—เธถเธเธเธฅเธ•เธฃเธงเธเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 			return
 		}
 		http.Redirect(w, r, "/admin/landlord-applications?result="+decision, 303)
@@ -5502,7 +5501,7 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	token, err := adminCSRFToken(w, r, session)
 	if err != nil {
-		http.Error(w, "สร้าง CSRF Token ไม่สำเร็จ", 500)
+		http.Error(w, "เธชเธฃเนเธฒเธ CSRF Token เนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	rows, err := db.QueryContext(r.Context(), `SELECT a.id,u.name,u.phone,a.dorm_name,a.status,
@@ -5512,7 +5511,7 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
         ORDER BY FIELD(a.status,'pending','rejected','approved'),a.id DESC LIMIT 200`)
 	if err != nil {
 		log.Println("Applications list error:", err)
-		http.Error(w, "โหลดคำขอไม่สำเร็จ ตรวจสอบการ Import SQL", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเธณเธเธญเนเธกเนเธชเธณเน€เธฃเนเธ เธ•เธฃเธงเธเธชเธญเธเธเธฒเธฃ Import SQL", 500)
 		return
 	}
 	page := demoLandlordApplicationsPage{Name: name, CSRFToken: token, Result: r.URL.Query().Get("result"), Applications: []demoLandlordApplication{}}
@@ -5529,7 +5528,7 @@ func adminLandlordApplicationsHandler(w http.ResponseWriter, r *http.Request) {
 	rows.Close()
 	if err != nil {
 		log.Println("Applications scan error:", err)
-		http.Error(w, "โหลดคำขอไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เธเธณเธเธญเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	adminRender(w, "admin_landlord_applications.html", page)
@@ -5550,7 +5549,7 @@ func adminLandlordDocumentHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil || id <= 0 {
-		http.Error(w, "รหัสเอกสารไม่ถูกต้อง", 400)
+		http.Error(w, "เธฃเธซเธฑเธชเน€เธญเธเธชเธฒเธฃเนเธกเนเธ–เธนเธเธ•เนเธญเธ", 400)
 		return
 	}
 	var docPath string
@@ -5560,17 +5559,17 @@ func adminLandlordDocumentHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err != nil {
-		http.Error(w, "โหลดเอกสารไม่สำเร็จ", 500)
+		http.Error(w, "เนเธซเธฅเธ”เน€เธญเธเธชเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธ", 500)
 		return
 	}
 	clean := filepath.Clean(filepath.FromSlash(docPath))
 	if filepath.Dir(clean) != filepath.Clean(demoDocsDir) || !strings.HasPrefix(filepath.Base(clean), "proof-") {
-		http.Error(w, "ตำแหน่งไฟล์ไม่ถูกต้อง", 403)
+		http.Error(w, "เธ•เธณเนเธซเธเนเธเนเธเธฅเนเนเธกเนเธ–เธนเธเธ•เนเธญเธ", 403)
 		return
 	}
 	f, err := os.Open(clean)
 	if err != nil {
-		http.Error(w, "ไม่พบไฟล์เอกสาร", 404)
+		http.Error(w, "เนเธกเนเธเธเนเธเธฅเนเน€เธญเธเธชเธฒเธฃ", 404)
 		return
 	}
 	defer f.Close()
